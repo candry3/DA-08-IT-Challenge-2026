@@ -1,0 +1,3 @@
+student_id,hold_code,hold_name,placed,blocks,plain_explanation,office,how_to_clear
+S5001,BUR-PAST,Bursar Past Due,2019-06-01,Registration and transcripts,You owe 214.00 from Spring 2019.,Bursar,Pay the balance or ask about the returning student balance forgiveness program
+S5001,ADM-RE,Readmission Required,2021-01-15,Registration,"You have been away more than two years, so you need to update your application.",Admissions,Submit the short readmission form online

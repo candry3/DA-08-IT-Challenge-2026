@@ -1,0 +1,32 @@
+program,credential_type,requirement_group,course,credits
+Business Administration (AAS),Degree,General education,ENGL 111,3
+Business Administration (AAS),Degree,General education,MATH 123,3
+Business Administration (AAS),Degree,General education,COMM 101,3
+Business Administration (AAS),Degree,General education,ECON 202,3
+Business Administration (AAS),Degree,General education,PSYC 101,3
+Business Administration (AAS),Degree,General education,IVYT 111,1
+Business Administration (AAS),Degree,Business core,BUSN 101,3
+Business Administration (AAS),Degree,Business core,BUSN 105,3
+Business Administration (AAS),Degree,Business core,ACCT 101,3
+Business Administration (AAS),Degree,Business core,ACCT 102,3
+Business Administration (AAS),Degree,Business core,BUSN 140,3
+Business Administration (AAS),Degree,Business core,BUSN 160,3
+Business Administration (AAS),Degree,Business core,CINS 101,3
+Business Administration (AAS),Degree,Concentration,BUSN 202,3
+Business Administration (AAS),Degree,Concentration,BUSN 211,3
+Business Administration (AAS),Degree,Concentration,BUSN 230,3
+Business Administration (AAS),Degree,Concentration,BUSN 250,3
+Business Administration (AAS),Degree,Capstone,BUSN 280,3
+Business Administration (AAS),Degree,Elective,Any BUSN or ACCT course,3
+Business Administration (AAS),Degree,Elective,Any course,3
+Business Operations (Certificate),Certificate,Required,BUSN 101,3
+Business Operations (Certificate),Certificate,Required,BUSN 105,3
+Business Operations (Certificate),Certificate,Required,ACCT 101,3
+Business Operations (Certificate),Certificate,Required,BUSN 160,3
+Business Operations (Certificate),Certificate,Required,CINS 101,3
+Business Operations (Certificate),Certificate,Required,ENGL 111,3
+Human Resources (Technical Certificate),Technical Certificate,Required,BUSN 105,3
+Human Resources (Technical Certificate),Technical Certificate,Required,BUSN 202,3
+Human Resources (Technical Certificate),Technical Certificate,Required,BUSN 140,3
+Human Resources (Technical Certificate),Technical Certificate,Required,BUSN 230,3
+Human Resources (Technical Certificate),Technical Certificate,Required,COMM 101,3

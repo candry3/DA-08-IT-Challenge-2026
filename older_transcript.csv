@@ -1,0 +1,15 @@
+student_id,term,course,title,credits,grade
+S5001,Fall 2017,BUSN 101,Introduction to Business,3,B
+S5001,Fall 2017,ENGL 111,English Composition,3,A
+S5001,Fall 2017,MATH 123,Quantitative Reasoning,3,C
+S5001,Fall 2017,IVYT 101,Student Success,1,A
+S5001,Spring 2018,ACCT 101,Financial Accounting,3,B
+S5001,Spring 2018,BUSN 105,Principles of Management,3,B
+S5001,Spring 2018,CINS 101,Introduction to Microcomputers,3,A
+S5001,Spring 2018,COMM 101,Fundamentals of Public Speaking,3,B
+S5001,Fall 2018,ACCT 102,Managerial Accounting,3,C
+S5001,Fall 2018,BUSN 140,Business Law,3,W
+S5001,Fall 2018,ECON 202,Principles of Microeconomics,3,B
+S5001,Fall 2018,BUSN 160,Marketing Principles,3,A
+S5001,Spring 2019,BUSN 202,Human Resource Management,3,B
+S5001,Spring 2019,BUSN 210,Small Business Management (retired),3,A
