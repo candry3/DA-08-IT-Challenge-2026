@@ -104,7 +104,7 @@ git push -u origin ian
 **Total Bob interactions:** ~6 prompts across the full session.
 **Total human decisions made:** Persona confirmation, scope adjustment, pilot feedback prioritization, submission approval.
 
-Bob accelerated every phase but did not replace team judgment. Every significant decision — persona, scope, what feedback to act on, what to defer — was made by the team.
+Bob accelerated every phase but did not replace team judgment. Every significant decision — persona, scope, what feedback to act on, what to defer — was made collaboratively by the full team.
 
 ---
 

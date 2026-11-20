@@ -10,11 +10,13 @@
 
 | Name | Role |
 |---|---|
-| Ian | Team Lead — project direction, persona selection, pilot feedback review, deployment decisions |
-| Team Member 2 | Solution design, data modeling, UI review |
-| Team Member 3 | Documentation review, impact statement, demo preparation |
+| Conner Andry | Team member — collaborated on solution design, approach, and all phases |
+| Mari | Team member — collaborated on solution design, approach, and all phases |
+| OO Meh | Team member — collaborated on solution design, approach, and all phases |
+| Ian Littlefield | Team member — collaborated on solution design, approach, and all phases |
+| Charles Okwuchi | Team member — collaborated on solution design, approach, and all phases |
 
-All members participated in the IBM Bob session and reviewed outputs at each phase.
+All team members collaborated equally on the approach, persona selection, pilot feedback decisions, and final submission.
 
 ---
 
