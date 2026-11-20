@@ -752,6 +752,7 @@ function runAnalysis() {
   const pct            = Math.round((satisfiedCredits / prog.total_credits) * 100);
   const semLeftFT      = Math.ceil(stillNeeded / 15);
   const semLeftPT      = Math.ceil(stillNeeded / 6);
+  const yearsLeftPT    = (semLeftPT / 2).toFixed(1).replace(/\.0$/, "");
 
   // ── HERO ───────────────────────────────────────────────────────
   document.getElementById("results-hero").innerHTML = `
@@ -764,7 +765,7 @@ function runAnalysis() {
       <div class="stats">
         <div class="stat"><div class="val">${stillNeeded}</div><div class="lbl">credits remaining</div></div>
         <div class="stat"><div class="val">${pct}%</div><div class="lbl">complete</div></div>
-        <div class="stat"><div class="val">~${semLeftFT}</div><div class="lbl">semester${semLeftFT !== 1 ? "s" : ""} (full-time)</div></div>
+        <div class="stat"><div class="val">~${semLeftPT}</div><div class="lbl">sem. part-time (2 courses)</div></div>
       </div>
     </div>`;
 
@@ -916,26 +917,31 @@ function runAnalysis() {
     <div class="finding open" id="f1">
       <div class="finding-header" onclick="toggleFinding('f1')">
         <div class="finding-num" style="background:#ede9fe;color:#5b21b6;">1</div>
-        <div class="finding-title">🕐 Spring 2027 Schedule Options That Fit Around Renee's Job</div>
+        <div class="finding-title">🕐 This Plan Works Around Your Job — Not the Other Way Around</div>
         <span class="finding-toggle">▾</span>
       </div>
       <div class="finding-body">
-        <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">
-          Renee works <strong>Monday–Friday, 8:00–16:30</strong>. All daytime in-person sections conflict. Here's what actually works from the Spring 2027 schedule:
-        </p>
+        <div class="alert alert-warn" style="margin-bottom:14px;">
+          <strong>Renee works full-time, Monday–Friday 8:00–16:30.</strong> This plan is built around 2 courses per semester — online or evenings only. No daytime in-person sections required.
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Part-time path</div>
+          <div class="fr-val" style="font-size:14px;"><strong style="font-size:18px;color:var(--ivy-blue);">${semLeftPT} semesters</strong> (~${yearsLeftPT} year${yearsLeftPT !== "1" ? "s" : ""}) taking <strong>2 courses at a time</strong> while working full-time.</div>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Full-time path</div>
+          <div class="fr-val" style="color:var(--muted);">${semLeftFT} semester${semLeftFT !== 1 ? "s" : ""} at 5 courses — <em>not recommended</em> given Renee's work schedule.</div>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Start Spring 2027</div>
+          <div class="fr-val"><strong>BUSN 230</strong> (Online, any time) + <strong>PSYC 101</strong> (Online, 8 weeks) — both fit around any work schedule, no conflicts.</div>
+        </div>
         ${schedRows ? `
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:14px 0 6px;">Spring 2027 sections for remaining courses</div>
         <table class="sched-table">
           <thead><tr><th>Course</th><th>Format</th><th>Days</th><th>Time</th><th>Length</th><th>Fits Renee?</th></tr></thead>
           <tbody>${schedRows}</tbody>
-        </table>` : '<p style="font-size:13px;color:var(--muted);">No Spring 2027 sections listed for remaining required courses.</p>'}
-        <div class="finding-row" style="margin-top:14px;">
-          <div class="fr-label">Part-time path</div>
-          <div class="fr-val">Taking <strong>2 courses per semester</strong> (6 credits), Renee could finish in <strong>${semLeftPT} semester${semLeftPT !== 1 ? "s" : ""}</strong> (~${Math.ceil(semLeftPT / 2)} year${Math.ceil(semLeftPT / 2) !== 1 ? "s" : ""}) while working full-time.</div>
-        </div>
-        <div class="finding-row">
-          <div class="fr-label">Recommended start</div>
-          <div class="fr-val">Begin with <strong>2 online courses</strong> next term. BUSN 230 (Organizational Behavior, Online) and PSYC 101 (Online) are both available Spring 2027 with no schedule conflicts.</div>
-        </div>
+        </table>` : ""}
       </div>
     </div>`;
 
@@ -945,9 +951,10 @@ function runAnalysis() {
     "BUSOPS-CERT": { prog: PROGRAMS["BUSOPS-CERT"], label: "Business Operations (Certificate)", credits: 18 },
     "HR-TECH-CERT": { prog: PROGRAMS["HR-TECH-CERT"], label: "Human Resources (Technical Certificate)", credits: 15 },
   };
-  let shortestHtml = "";
+  // Build shortest-path summary: check each cert, rank by % complete
+  let certResults = [];
   Object.entries(certCheck).forEach(([key, cc]) => {
-    if (key === document.getElementById("program-select").value) return; // already viewing this
+    if (key === document.getElementById("program-select").value) return;
     let certSatisfied = 0, certMissing = [];
     cc.prog.categories.forEach(cat => {
       cat.courses.forEach(req => {
@@ -955,41 +962,63 @@ function runAnalysis() {
         if (taken && gradeApplies(taken.grade)) {
           certSatisfied += req.credits;
         } else {
-          certMissing.push(req.course_id);
+          certMissing.push({ course_id: req.course_id, title: req.title, credits: req.credits });
         }
       });
     });
     const certPct = Math.round((certSatisfied / cc.credits) * 100);
-    shortestHtml += `
-      <div class="cred-badge ${certPct >= 60 ? "cred-close" : "cred-earned"}" style="display:flex;margin-bottom:8px;">
-        <span>📜</span>
-        <span>${cc.label} — <strong>${certSatisfied}/${cc.credits} credits complete (${certPct}%)</strong></span>
-      </div>
-      <div class="finding-row">
-        <div class="fr-label">Still needed</div>
-        <div class="fr-val">${certMissing.length > 0 ? certMissing.map(id => `<strong>${id}</strong>`).join(", ") : "All requirements satisfied!"} ${certMissing.length > 0 ? `(${certMissing.length * 3} credits)` : ""}</div>
-      </div>`;
+    certResults.push({ key, label: cc.label, total: cc.credits, satisfied: certSatisfied, missing: certMissing, pct: certPct });
   });
+  // Sort: 100% first, then highest pct
+  certResults.sort((a, b) => b.pct - a.pct);
+
+  let shortestHtml = certResults.map(cr => {
+    const done = cr.pct === 100;
+    const creditsLeft = cr.missing.reduce((s, r) => s + r.credits, 0);
+    return `
+      <div style="background:${done ? "#f0fdf4" : "#fff8f0"};border:1px solid ${done ? "#bbf7d0" : "#fed7aa"};border-radius:8px;padding:14px 16px;margin-bottom:12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <div style="font-weight:700;font-size:15px;color:${done ? "var(--success)" : "var(--warning)"};">
+            ${done ? "✅" : "🎯"} ${cr.label}
+          </div>
+          <div style="font-size:22px;font-weight:800;color:${done ? "var(--success)" : "var(--ivy-blue)"};">${cr.pct}%</div>
+        </div>
+        ${done
+          ? `<div style="font-size:13px;color:var(--success);font-weight:600;">All ${cr.total} credits satisfied — Renee can apply for this credential now.</div>`
+          : `<div style="font-size:13px;color:var(--muted);">Still needs: ${cr.missing.map(r => `<strong>${r.course_id}</strong>`).join(", ")} (${creditsLeft} credits)</div>`
+        }
+      </div>`;
+  }).join("") || '<p style="font-size:13px;color:var(--muted);">You are already viewing the shortest available credential.</p>';
+
+  // Headline: is Renee already done for any credential?
+  const alreadyDone = certResults.find(cr => cr.pct === 100);
+  const findingTitle = alreadyDone
+    ? `🏁 Renee Already Qualifies for the ${alreadyDone.label}`
+    : `🏁 Shortest Path to a Credential`;
 
   document.getElementById("finding-2").innerHTML = `
-    <div class="finding" id="f2">
+    <div class="finding open" id="f2">
       <div class="finding-header" onclick="toggleFinding('f2')">
         <div class="finding-num" style="background:#d1fae5;color:#065f46;">2</div>
-        <div class="finding-title">🏁 Stackable Credentials — Shorter Paths Within Reach</div>
+        <div class="finding-title">${findingTitle}</div>
         <span class="finding-toggle">▾</span>
       </div>
       <div class="finding-body">
+        ${alreadyDone ? `
+        <div class="alert alert-success" style="margin-bottom:14px;">
+          <strong>Renee can earn a credential this semester.</strong> She already meets every requirement for the ${alreadyDone.label}. Every credit she earned also counts toward the full AAS — zero duplication.
+        </div>` : `
         <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">
-          Renee doesn't have to wait for the full degree to earn a credential. Every credit earned for a certificate counts toward the AAS — they stack directly.
-        </p>
-        ${shortestHtml || '<p style="font-size:13px;color:var(--muted);">You are already viewing the shortest available credential.</p>'}
+          Renee doesn't have to wait until the full degree. These shorter credentials stack directly into the AAS — every credit counts toward both.
+        </p>`}
+        ${shortestHtml}
         <div class="finding-row">
           <div class="fr-label">Why it matters</div>
-          <div class="fr-val">Earning a certificate first demonstrates progress to an employer, may qualify for a promotion sooner, and every credit stacks into the AAS with no duplication.</div>
+          <div class="fr-val">A certificate can go to Renee's employer <em>now</em> — before she finishes the full AAS. Every credit she earned for it stacks into the degree with no duplication.</div>
         </div>
         <div class="finding-row">
           <div class="fr-label">Ask your advisor</div>
-          <div class="fr-val"><a href="#" style="color:var(--accent);">Confirm stackable certificate eligibility and discuss the fastest path →</a></div>
+          <div class="fr-val"><a href="#" style="color:var(--accent);">Confirm certificate eligibility and start the application →</a></div>
         </div>
       </div>
     </div>`;
@@ -1010,27 +1039,25 @@ function runAnalysis() {
     <div class="finding open" id="f3">
       <div class="finding-header" onclick="toggleFinding('f3')">
         <div class="finding-num" style="background:#fee2e2;color:#991b1b;">3</div>
-        <div class="finding-title">🔒 2 Active Holds — Must Clear to Register for Spring 2027</div>
+        <div class="finding-title">🔒 2 Holds Are Blocking Registration — Here's How to Clear Them</div>
         <span class="finding-toggle">▾</span>
       </div>
       <div class="finding-body">
-        <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">
-          These holds are on file. <strong>They do not erase or invalidate any credits.</strong> However, both must be cleared before Renee can register for Spring 2027 classes.
-        </p>
-        ${holdBoxes}
-        <div class="finding-row">
-          <div class="fr-label">Priority order</div>
-          <div class="fr-val">
-            <ol style="padding-left:16px;line-height:1.9;">
-              <li><strong>Submit readmission form</strong> first (ADM-RE) — it's free, done online, and unblocks the conversation with an advisor</li>
-              <li><strong>Contact the Bursar</strong> (BUR-PAST) — ask specifically about the <em>Returning Student Balance Forgiveness Program</em> before paying</li>
-              <li>Log in to <a href="https://my.ivytech.edu" style="color:var(--accent);">my.ivytech.edu → Student Records → Holds</a> to see real-time hold status</li>
-            </ol>
-          </div>
+        <div class="alert alert-danger" style="margin-bottom:14px;">
+          <strong>Your credits are safe.</strong> These holds do not erase or change any of your credits. But both must be cleared before you can register for Spring 2027.
         </div>
-        <div class="finding-row">
-          <div class="fr-label">Important</div>
-          <div class="fr-val">Don't let the holds stop you from starting the conversation. Advisors can begin your credit audit and build your plan <em>before</em> the holds are cleared.</div>
+        ${holdBoxes}
+        <div style="background:var(--ivy-light);border-radius:8px;padding:16px 18px;margin-top:4px;">
+          <div style="font-weight:700;font-size:14px;color:var(--ivy-blue);margin-bottom:10px;">Clear in this order:</div>
+          <ol style="padding-left:18px;line-height:2;font-size:13px;">
+            <li><strong>Submit the readmission form online</strong> (ADM-RE) — free, takes 5 minutes at ivytech.edu. Do this first.</li>
+            <li><strong>Call the Bursar's Office</strong> (BUR-PAST) — ask about the <em>Returning Student Balance Forgiveness Program</em> before paying anything.</li>
+            <li>Once cleared: log in to <a href="https://my.ivytech.edu" style="color:var(--accent);">my.ivytech.edu → Student Records → Holds</a> to confirm.</li>
+          </ol>
+        </div>
+        <div class="finding-row" style="margin-top:4px;">
+          <div class="fr-label">Don't wait</div>
+          <div class="fr-val">An advisor can start your official credit evaluation and build your plan <em>before</em> the holds are cleared. Contact advising now — don't let holds stop the conversation.</div>
         </div>
       </div>
     </div>`;
