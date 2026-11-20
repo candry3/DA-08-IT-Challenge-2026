@@ -43,33 +43,63 @@ This prototype demonstrates the full experience using Jordan Rivera's mock trans
 
 The prototype is built with **plain HTML, CSS, and JavaScript** — no framework, no build step, no dependencies. It runs by serving a single folder from a local HTTP server.
 
+**Repository structure:**
+
+```
+DA-08-IT-Challenge-2026/
+├── README.md                          ← This file
+├── prototype/
+│   └── credit-audit-dashboard.html   ← Working prototype (open in browser)
+├── presentation/
+│   └── slides.html                   ← Full presentation deck
+├── docs/
+│   ├── impact-statement.md           ← One-page impact summary
+│   ├── implementation-plan.md        ← Full prototype build plan (5 sub-tasks)
+│   ├── future-vision.md              ← How this connects to the 2030 future of college
+│   ├── persona.md                    ← Four strategic layers (persona, pillar, solution, metric)
+│   └── strategic-pillars.docx        ← Ivy Tech 2030 Strategic Pillars reference
+├── source-data/
+│   ├── case_data.js                  ← All CSV data as a single JS-loadable file
+│   ├── student.csv
+│   ├── older_transcript.csv
+│   ├── program_requirements.csv
+│   ├── course_mapping.csv
+│   ├── holds.csv
+│   └── spring_2027_schedule.csv
+├── challenge-instructions/
+│   └── challenge-brief-page-[1-5].jpg
+├── assets/
+│   └── qr-code.png
+└── logs/
+    └── collaboration-log.md          ← Full IBM Bob planning session log
+```
+
 **Architecture:**
 
 ```
-data/transcript.json  ──┐
-                         ├──► runAudit()  ──► { applied, unmatched, remaining }
-data/program.json     ──┘         │
-                                  ▼
-                         computeSummary()  ──► credits applied, % complete
-                                  │
-                         renderDashboard() ──► DOM sections + progress bar
+source-data/older_transcript.csv  ──┐
+                                     ├──► runAudit()  ──► { applied, unmatched, remaining }
+source-data/program_requirements.csv ┘         │
+                                               ▼
+                                     computeSummary()  ──► credits applied, % complete
+                                               │
+                                     renderDashboard() ──► DOM sections + progress bar
 ```
 
-**Key components:**
+**Key components (all self-contained in `prototype/credit-audit-dashboard.html`):**
 
-- **`data/transcript.json`** — Jordan Rivera's mock transcript: 15 past courses, ~58 credits, subject areas spanning English, Math, Sciences, Social Sciences, and Electives, taken 2013–2016.
-- **`data/program.json`** — The Bachelor of Applied Studies program: ~32 requirements, 120 credits total, organized into General Education, Core Requirements, Concentration, and Electives.
-- **`runAudit(transcript, program)`** — The matching engine. For each past credit, it searches the current program requirements for a matching `subjectArea`. Matched credits are classified as *applied*; unmatched credits are flagged; unmet requirements become the remaining list.
-- **`computeSummary(auditResult)`** — Computes credits applied, credits still needed, and percentage complete.
+- **Transcript data** — Renee (S5001): 14 past courses, Fall 2017–Spring 2019, sourced from `source-data/older_transcript.csv`.
+- **Program data** — Three selectable programs (Business AAS, Business Ops Certificate, HR Certificate) from `source-data/program_requirements.csv`.
+- **`runAudit()`** — The matching engine. For each past credit, searches the current program for a matching course. Matched credits are classified as *applied*; unmatched are flagged.
+- **`computeSummary()`** — Computes credits applied, credits still needed, and percentage complete.
 - **`renderDashboard()`** — Builds the DOM from the audit result. Rendering is kept strictly separate from logic.
 
-**Matching rule (prototype):** Subject-area alignment. A past credit applies if its subject area matches the subject area of an unmet current requirement. Each requirement can only be satisfied once. Credit expiry rules and course-code equivalency matching are future enhancements.
+**Matching rule (prototype):** Course equivalency + subject-area alignment. The prototype also handles retired course remapping (e.g., IVYT 101 → COLL 101) and grade-based applicability. Credit expiry rules are a future enhancement.
 
 **To run:**
 ```bash
-cd credit-audit
-python3 -m http.server 8080
-# Open http://localhost:8080
+# Just open the file — no server needed
+open prototype/credit-audit-dashboard.html
 ```
 
 ---
@@ -113,7 +143,7 @@ The conversation started with a user story: *"As a returning adult, I can see ho
 Bob constructed the four-layer strategic foundation: the persona (Jordan Rivera), the pillar (Ivy Tech 2030 Student-Centered Journey), the solution framing (Credit Audit Dashboard), and the measurable 2030 metric (1,000 stop-out credential completions per year). Each layer was grounded in the user's answers — Bob did not speculate or invent numbers it could not support.
 
 **Step 3 — Writing the plan.**
-Bob produced a structured implementation plan in [`returning-adult-credit-audit-plan.md`](returning-adult-credit-audit-plan.md) breaking the prototype into five independently executable sub-tasks — scaffold, mock data, matching engine, dashboard UI, and README — each with intent, expected outcomes, ordered steps, and relevant context. The plan is designed to be handed to Bob's Agent mode for implementation, one sub-task at a time.
+Bob produced a structured implementation plan in [`docs/implementation-plan.md`](docs/implementation-plan.md) breaking the prototype into five independently executable sub-tasks — scaffold, mock data, matching engine, dashboard UI, and README — each with intent, expected outcomes, ordered steps, and relevant context. The plan is designed to be handed to Bob's Agent mode for implementation, one sub-task at a time.
 
 **Step 4 — Writing this README.**
 Bob authored this README from the plan's strategic foundation, translating the technical plan into a narrative that works for a dean, a product owner, a developer, and a student — all at once.

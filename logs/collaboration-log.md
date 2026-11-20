@@ -96,7 +96,7 @@ Loaded the `create-plan` skill. Began structured requirements gathering before w
 ## Turn 8 — First Plan Produced
 
 **Bob's action:**
-Wrote the initial plan file at [`returning-adult-credit-audit-plan.md`](returning-adult-credit-audit-plan.md) with:
+Wrote the initial plan file at [`docs/implementation-plan.md`](../docs/implementation-plan.md) with:
 - Top-level prototype overview
 - Five sub-tasks: scaffold, mock data, matching engine, dashboard UI, README
 - Data flow diagram
@@ -189,7 +189,7 @@ Wrote [`README.md`](README.md) at the workspace root with the five sections as s
 > Extract the logs of how we worked together.
 
 **Bob's action:**
-Read the current state of [`README.md`](README.md) to confirm external edits were preserved. Wrote this collaboration log at [`collaboration-log.md`](collaboration-log.md).
+Read the current state of [`README.md`](../README.md) to confirm external edits were preserved. Wrote this collaboration log at [`logs/collaboration-log.md`](collaboration-log.md).
 
 ---
 
@@ -197,9 +197,9 @@ Read the current state of [`README.md`](README.md) to confirm external edits wer
 
 | File | Description |
 |---|---|
-| [`returning-adult-credit-audit-plan.md`](returning-adult-credit-audit-plan.md) | Full implementation plan with strategic foundation + 5 prototype sub-tasks |
-| [`README.md`](README.md) | Project-facing narrative document with 5 sections |
-| [`collaboration-log.md`](collaboration-log.md) | This file — full session log |
+| [`docs/implementation-plan.md`](../docs/implementation-plan.md) | Full implementation plan with strategic foundation + 5 prototype sub-tasks |
+| [`README.md`](../README.md) | Project-facing narrative document with 5 sections |
+| [`logs/collaboration-log.md`](collaboration-log.md) | This file — full session log |
 
 ---
 
