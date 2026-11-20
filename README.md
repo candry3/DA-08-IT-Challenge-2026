@@ -80,8 +80,8 @@ A full log of the IBM Bob session is included in [`BOB_SESSION_LOG.md`](./BOB_SE
 
 - [x] Working code in this public repository with a commit history judges can follow
 - [x] README with five required sections (problem, solution, AI/technical approach, pillar & persona, how IBM Bob was used)
-- [ ] One-page 2030 Impact Statement (`IMPACT_STATEMENT.md`)
-- [ ] Log of how the team and IBM Bob worked together (`BOB_SESSION_LOG.md`)
+- [x] One-page 2030 Impact Statement (`IMPACT_STATEMENT.md`)
+- [x] Log of how the team and IBM Bob worked together (`BOB_SESSION_LOG.md`)
 - [ ] Live demonstration of the prototype running end to end
 
 ---
