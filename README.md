@@ -6,6 +6,18 @@
 
 ---
 
+## Quick Links
+
+| Resource | Link |
+|---|---|
+| 🌐 **Live Prototype** | https://ivy-tech-da08-2026.pages.dev |
+| 📄 **2030 Impact Statement** | https://github.com/candry3/DA-08-IT-Challenge-2026/blob/ian/IMPACT_STATEMENT.md |
+| 🤖 **IBM Bob Session Log** | https://github.com/candry3/DA-08-IT-Challenge-2026/blob/ian/BOB_SESSION_LOG.md |
+| 📋 **Bob Output Log** | https://github.com/candry3/DA-08-IT-Challenge-2026/blob/ian/BOB_OUTPUT_LOG.md |
+| 💻 **Prototype Source Code** | https://github.com/candry3/DA-08-IT-Challenge-2026/tree/ian/credit-audit |
+
+---
+
 ## Team Members
 
 | Name | Role |
