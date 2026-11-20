@@ -82,7 +82,7 @@ A full log of the IBM Bob session is included in [`BOB_SESSION_LOG.md`](./BOB_SE
 - [x] README with five required sections (problem, solution, AI/technical approach, pillar & persona, how IBM Bob was used)
 - [x] One-page 2030 Impact Statement (`IMPACT_STATEMENT.md`)
 - [x] Log of how the team and IBM Bob worked together (`BOB_SESSION_LOG.md`)
-- [ ] Live demonstration of the prototype running end to end
+- [x] Live demonstration of the prototype running end to end — https://ivy-tech-da08-2026.pages.dev
 
 ---
 
@@ -113,10 +113,13 @@ A full log of the IBM Bob session is included in [`BOB_SESSION_LOG.md`](./BOB_SE
 
 ## Working Prototype
 
-The prototype is a web app. See [`/app`](./app/) for source code.
+**🌐 Live demo:** https://ivy-tech-da08-2026.pages.dev
+
+The prototype is a web app. See [`/credit-audit`](./credit-audit/) for source code. Hosted on Cloudflare Pages from the `ian` branch.
 
 **To run locally:**
 ```bash
-# Open index.html directly in a browser — no build step required
-open app/index.html
+cd credit-audit
+python3 -m http.server 8080
+# then open http://localhost:8080
 ```
