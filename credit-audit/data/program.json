@@ -1,0 +1,244 @@
+{
+  "program": "Bachelor of Applied Studies",
+  "totalCreditsRequired": 120,
+  "requirements": [
+    {
+      "id": "REQ-ENG-1",
+      "title": "English Composition I",
+      "subjectArea": "English",
+      "credits": 3,
+      "category": "General Education"
+    },
+    {
+      "id": "REQ-ENG-2",
+      "title": "English Composition II",
+      "subjectArea": "English Composition II",
+      "credits": 3,
+      "category": "General Education"
+    },
+    {
+      "id": "REQ-SPE-1",
+      "title": "Public Speaking",
+      "subjectArea": "Speech",
+      "credits": 3,
+      "category": "General Education"
+    },
+    {
+      "id": "REQ-MAT-1",
+      "title": "College Algebra or higher",
+      "subjectArea": "Mathematics",
+      "credits": 3,
+      "category": "General Education"
+    },
+    {
+      "id": "REQ-SCI-1",
+      "title": "Natural Science with Lab",
+      "subjectArea": "Biology",
+      "credits": 3,
+      "category": "General Education"
+    },
+    {
+      "id": "REQ-SCI-2",
+      "title": "Natural Science Lab Component",
+      "subjectArea": "Biology Lab",
+      "credits": 1,
+      "category": "General Education"
+    },
+    {
+      "id": "REQ-PSY-1",
+      "title": "Introduction to Psychology",
+      "subjectArea": "Psychology",
+      "credits": 3,
+      "category": "General Education"
+    },
+    {
+      "id": "REQ-SOC-1",
+      "title": "Social Science Elective",
+      "subjectArea": "Sociology",
+      "credits": 3,
+      "category": "General Education"
+    },
+    {
+      "id": "REQ-HUM-1",
+      "title": "Humanities Elective",
+      "subjectArea": "Philosophy",
+      "credits": 3,
+      "category": "General Education"
+    },
+    {
+      "id": "REQ-COM-1",
+      "title": "Interpersonal Communication",
+      "subjectArea": "Communication",
+      "credits": 3,
+      "category": "General Education"
+    },
+    {
+      "id": "REQ-BUS-1",
+      "title": "Introduction to Business",
+      "subjectArea": "Business",
+      "credits": 3,
+      "category": "Core Requirements"
+    },
+    {
+      "id": "REQ-ECO-1",
+      "title": "Macroeconomics",
+      "subjectArea": "Economics",
+      "credits": 3,
+      "category": "Core Requirements"
+    },
+    {
+      "id": "REQ-CIS-1",
+      "title": "Computer Applications",
+      "subjectArea": "Computer Information Systems",
+      "credits": 3,
+      "category": "Core Requirements"
+    },
+    {
+      "id": "REQ-MGT-1",
+      "title": "Principles of Management",
+      "subjectArea": "Management",
+      "credits": 3,
+      "category": "Core Requirements"
+    },
+    {
+      "id": "REQ-MGT-2",
+      "title": "Organizational Behavior",
+      "subjectArea": "Organizational Behavior",
+      "credits": 3,
+      "category": "Core Requirements"
+    },
+    {
+      "id": "REQ-MGT-3",
+      "title": "Project Management",
+      "subjectArea": "Project Management",
+      "credits": 3,
+      "category": "Core Requirements"
+    },
+    {
+      "id": "REQ-FIN-1",
+      "title": "Personal Finance",
+      "subjectArea": "Finance",
+      "credits": 3,
+      "category": "Core Requirements"
+    },
+    {
+      "id": "REQ-MKT-1",
+      "title": "Introduction to Marketing",
+      "subjectArea": "Marketing",
+      "credits": 3,
+      "category": "Core Requirements"
+    },
+    {
+      "id": "REQ-LAW-1",
+      "title": "Business Law",
+      "subjectArea": "Business Law",
+      "credits": 3,
+      "category": "Core Requirements"
+    },
+    {
+      "id": "REQ-ACC-1",
+      "title": "Principles of Accounting I",
+      "subjectArea": "Accounting",
+      "credits": 3,
+      "category": "Core Requirements"
+    },
+    {
+      "id": "REQ-CON-1",
+      "title": "Applied Leadership",
+      "subjectArea": "Leadership",
+      "credits": 3,
+      "category": "Concentration"
+    },
+    {
+      "id": "REQ-CON-2",
+      "title": "Strategic Planning",
+      "subjectArea": "Strategic Planning",
+      "credits": 3,
+      "category": "Concentration"
+    },
+    {
+      "id": "REQ-CON-3",
+      "title": "Data Analysis for Decision Making",
+      "subjectArea": "Data Analysis",
+      "credits": 3,
+      "category": "Concentration"
+    },
+    {
+      "id": "REQ-CON-4",
+      "title": "Ethics in the Workplace",
+      "subjectArea": "Ethics",
+      "credits": 3,
+      "category": "Concentration"
+    },
+    {
+      "id": "REQ-CON-5",
+      "title": "Human Resources Management",
+      "subjectArea": "Human Resources",
+      "credits": 3,
+      "category": "Concentration"
+    },
+    {
+      "id": "REQ-CON-6",
+      "title": "Capstone: Applied Project",
+      "subjectArea": "Capstone",
+      "credits": 3,
+      "category": "Concentration"
+    },
+    {
+      "id": "REQ-CON-7",
+      "title": "Global Business Perspectives",
+      "subjectArea": "Global Business",
+      "credits": 3,
+      "category": "Concentration"
+    },
+    {
+      "id": "REQ-CON-8",
+      "title": "Technology in the Workplace",
+      "subjectArea": "Workplace Technology",
+      "credits": 3,
+      "category": "Concentration"
+    },
+    {
+      "id": "REQ-ELE-1",
+      "title": "Elective I",
+      "subjectArea": "History",
+      "credits": 3,
+      "category": "Electives"
+    },
+    {
+      "id": "REQ-ELE-2",
+      "title": "Elective II",
+      "subjectArea": "Fine Arts",
+      "credits": 3,
+      "category": "Electives"
+    },
+    {
+      "id": "REQ-ELE-3",
+      "title": "Elective III",
+      "subjectArea": "Statistics",
+      "credits": 3,
+      "category": "Electives"
+    },
+    {
+      "id": "REQ-ELE-4",
+      "title": "Elective IV",
+      "subjectArea": "Environmental Science",
+      "credits": 3,
+      "category": "Electives"
+    },
+    {
+      "id": "REQ-ELE-5",
+      "title": "Elective V",
+      "subjectArea": "Political Science",
+      "credits": 3,
+      "category": "Electives"
+    },
+    {
+      "id": "REQ-ELE-6",
+      "title": "Elective VI — Free Choice",
+      "subjectArea": "Chemistry",
+      "credits": 3,
+      "category": "Electives"
+    }
+  ]
+}

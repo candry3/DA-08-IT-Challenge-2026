@@ -1,0 +1,169 @@
+{
+  "student": {
+    "name": "Jordan Rivera",
+    "id": "STU-2016-00492",
+    "lastEnrolled": "2016-05-15"
+  },
+  "credits": [
+    {
+      "courseCode": "ENG-101",
+      "title": "English Composition I",
+      "subjectArea": "English",
+      "credits": 3,
+      "grade": "B",
+      "yearTaken": 2013
+    },
+    {
+      "courseCode": "ENG-102",
+      "title": "English Composition II",
+      "subjectArea": "English Composition II",
+      "credits": 3,
+      "grade": "B+",
+      "yearTaken": 2013
+    },
+    {
+      "courseCode": "MAT-121",
+      "title": "College Algebra",
+      "subjectArea": "Mathematics",
+      "credits": 3,
+      "grade": "C+",
+      "yearTaken": 2013
+    },
+    {
+      "courseCode": "MAT-211",
+      "title": "Calculus I",
+      "subjectArea": "Calculus",
+      "credits": 4,
+      "grade": "C",
+      "yearTaken": 2014
+    },
+    {
+      "courseCode": "BIO-101",
+      "title": "Introduction to Biology",
+      "subjectArea": "Biology",
+      "credits": 3,
+      "grade": "A",
+      "yearTaken": 2013
+    },
+    {
+      "courseCode": "BIO-101L",
+      "title": "Introduction to Biology Lab",
+      "subjectArea": "Biology Lab",
+      "credits": 1,
+      "grade": "A",
+      "yearTaken": 2013
+    },
+    {
+      "courseCode": "CHE-101",
+      "title": "Introduction to Chemistry",
+      "subjectArea": "Chemistry",
+      "credits": 3,
+      "grade": "B-",
+      "yearTaken": 2014
+    },
+    {
+      "courseCode": "PSY-101",
+      "title": "Introduction to Psychology",
+      "subjectArea": "Psychology",
+      "credits": 3,
+      "grade": "A",
+      "yearTaken": 2013
+    },
+    {
+      "courseCode": "SOC-111",
+      "title": "Introduction to Sociology",
+      "subjectArea": "Sociology",
+      "credits": 3,
+      "grade": "A-",
+      "yearTaken": 2014
+    },
+    {
+      "courseCode": "HIS-101",
+      "title": "World History I",
+      "subjectArea": "History",
+      "credits": 3,
+      "grade": "B",
+      "yearTaken": 2014
+    },
+    {
+      "courseCode": "COM-101",
+      "title": "Introduction to Communication",
+      "subjectArea": "Communication",
+      "credits": 3,
+      "grade": "A",
+      "yearTaken": 2015
+    },
+    {
+      "courseCode": "CIS-101",
+      "title": "Introduction to Computers",
+      "subjectArea": "Computer Information Systems",
+      "credits": 3,
+      "grade": "A",
+      "yearTaken": 2015
+    },
+    {
+      "courseCode": "BUS-101",
+      "title": "Introduction to Business",
+      "subjectArea": "Business",
+      "credits": 3,
+      "grade": "B",
+      "yearTaken": 2015
+    },
+    {
+      "courseCode": "ECO-201",
+      "title": "Macroeconomics",
+      "subjectArea": "Economics",
+      "credits": 3,
+      "grade": "B+",
+      "yearTaken": 2015
+    },
+    {
+      "courseCode": "PHI-101",
+      "title": "Introduction to Philosophy",
+      "subjectArea": "Philosophy",
+      "credits": 3,
+      "grade": "B",
+      "yearTaken": 2015
+    },
+    {
+      "courseCode": "ART-101",
+      "title": "Art Appreciation",
+      "subjectArea": "Fine Arts",
+      "credits": 3,
+      "grade": "A-",
+      "yearTaken": 2016
+    },
+    {
+      "courseCode": "PED-101",
+      "title": "Physical Education",
+      "subjectArea": "Physical Education",
+      "credits": 1,
+      "grade": "A",
+      "yearTaken": 2013
+    },
+    {
+      "courseCode": "NUR-110",
+      "title": "Introduction to Nursing Concepts",
+      "subjectArea": "Nursing",
+      "credits": 3,
+      "grade": "C",
+      "yearTaken": 2016
+    },
+    {
+      "courseCode": "MUS-101",
+      "title": "Music Appreciation",
+      "subjectArea": "Music",
+      "credits": 3,
+      "grade": "A",
+      "yearTaken": 2016
+    },
+    {
+      "courseCode": "SPE-101",
+      "title": "Public Speaking",
+      "subjectArea": "Speech",
+      "credits": 3,
+      "grade": "B+",
+      "yearTaken": 2016
+    }
+  ]
+}

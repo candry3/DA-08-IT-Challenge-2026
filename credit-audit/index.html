@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Come Back and Finish — Credit Audit Planner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <h1>Come Back and Finish</h1>
+    <p class="subtitle">Ivy Tech Credit Audit Planner — See how your past credits apply today</p>
+  </header>
+
+  <main>
+
+    <!-- Loading state -->
+    <p id="loading">Loading your credit audit…</p>
+
+    <!-- Dashboard (hidden until data loads) -->
+    <div id="dashboard" style="display:none">
+
+      <!-- Summary Banner -->
+      <section id="summary-banner" aria-label="Credit audit summary">
+        <h2>Welcome back, <span id="student-name"></span></h2>
+        <p class="banner-program">Program: <strong><span id="program-name"></span></strong></p>
+
+        <div class="banner-stats">
+          <div class="stat-box">
+            <span class="stat-number" id="credits-applied"></span>
+            <span class="stat-label">Credits Applied</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number" id="credits-remaining"></span>
+            <span class="stat-label">Credits Still Needed</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number" id="pct-label"></span>
+            <span class="stat-label">Complete</span>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <p class="progress-label">Progress toward graduation</p>
+          <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 1: Credits That Apply -->
+      <section class="audit-section section-applied" aria-label="Credits that apply">
+        <h2 class="section-heading" id="applied-heading">Credits That Apply</h2>
+        <div id="applied-list"></div>
+      </section>
+
+      <!-- Section 2: Credits That No Longer Count -->
+      <section class="audit-section section-unmatched" aria-label="Credits that no longer count">
+        <h2 class="section-heading" id="unmatched-heading">Credits That No Longer Count</h2>
+        <div id="unmatched-list"></div>
+      </section>
+
+      <!-- Section 3: Remaining Requirements -->
+      <section class="audit-section section-remaining" aria-label="Remaining requirements">
+        <h2 class="section-heading" id="remaining-heading">Still Needed to Graduate</h2>
+        <div id="remaining-list"></div>
+      </section>
+
+    </div><!-- /dashboard -->
+
+  </main>
+
+  <footer class="site-footer">
+    <strong>Prototype only — sample data.</strong>
+    This tool uses fictional student and program data for demonstration purposes.
+    Contact your Ivy Tech advisor to confirm your official credit evaluation before making any enrollment decision.
+    <br>A human advisor is always available to review your record.
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
