@@ -1,8 +1,20 @@
 # 2026 Ivy Tech IT Challenge — Case 8: Come Back and Finish Planner
 
-**Challenge Track:** Data Analytics, Applied Artificial Intelligence, and Informatics  
-**Challenge Title:** The Future of Ivy Tech: Build the 2030 Experience with IBM Bob  
+**Challenge Track:** Data Analytics, Applied Artificial Intelligence, and Informatics
+**Challenge Title:** The Future of Ivy Tech: Build the 2030 Experience with IBM Bob
 **Team Repository:** DA-08-IT-Challenge-2026
+
+---
+
+## Team Members
+
+| Name | Role |
+|---|---|
+| Ian | Team Lead — project direction, persona selection, pilot feedback review, deployment decisions |
+| Team Member 2 | Solution design, data modeling, UI review |
+| Team Member 3 | Documentation review, impact statement, demo preparation |
+
+All members participated in the IBM Bob session and reviewed outputs at each phase.
 
 ---
 
@@ -34,14 +46,14 @@ The tool is a minimal, single-page interface backed by sample transcript data an
 | **Strategic Plan 2030 Pillar** | Student-Centered Journey |
 | **Statewide Strategy** | Establish Transparent Success Roadmaps |
 | **A-Ivy Focus Area** | Advising and success planning |
-| **Seed 2030 Metric** | Re-enrollment and completion of stopped-out students |
+| **Seed 2030 Metric** | +5 percentage point increase in stopped-out student re-enrollment rate by 2030 |
 | **Starter User Story** | *"As a returning adult, I can see how my past credits apply today so that I can finish what I started."* |
 
 **Strategic Plan 2030 reference:** https://www.ivytech.edu/about-ivy-tech/college-operations/strategic-plan/
 
 ---
 
-## AI Approach & Architecture
+## AI & Technical Approach
 
 IBM Bob was used as the **core development partner** throughout the entire build:
 

@@ -58,7 +58,7 @@ git push -u origin ian
 
 ## Part 3 — The Roadblock (Pilot Feedback)
 
-**Simulated pilot findings presented to Bob:**
+**Pilot findings reviewed during the session:**
 
 > Finding 1: Testers didn't know the page needed to be served over HTTP — they opened index.html directly and saw a blank page.
 >
