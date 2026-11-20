@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++  <title>Come Back &amp; Finish — Ivy Tech Credit Audit Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ivy-blue:   #003865;
+      --ivy-gold:   #F2A900;
+      --ivy-light:  #E8F0F8;
+      --accent:     #0057A8;
+      --success:    #1A7F4B;
+      --warning:    #B45309;
+      --danger:     #C0392B;
+      --muted:      #57606a;
+      --border:     #d1d9e0;
+      --bg:         #f4f6f9;
+      --surface:    #ffffff;
+      --text:       #1f2328;
+      --radius:     8px;
+    }
+
+    body {
+      font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--ivy-blue);
+      color: #fff;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .header-brand { display: flex; align-items: center; gap: 12px; }
+    .header-brand .logo-mark {
+      background: var(--ivy-gold);
+      color: var(--ivy-blue);
+      font-weight: 800;
+      font-size: 18px;
+      width: 40px; height: 40px;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      letter-spacing: -1px;
+    }
+    .header-brand h1 { font-size: 18px; font-weight: 700; letter-spacing: .3px; }
+    .header-brand p  { font-size: 11px; opacity: .75; }
+    .header-badge {
+      background: var(--ivy-gold);
+      color: var(--ivy-blue);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: .5px;
+    }
+
+    .wrapper { max-width: 960px; margin: 0 auto; padding: 32px 20px 60px; }
+
+    .steps {
+      display: flex;
+      gap: 0;
+      margin-bottom: 28px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .step-btn {
+      flex: 1;
+      padding: 10px 6px;
+      background: var(--surface);
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      border-right: 1px solid var(--border);
+      transition: background .2s, color .2s;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .step-btn:last-child { border-right: none; }
+    .step-btn.active { background: var(--ivy-blue); color: #fff; }
+    .step-btn.done   { background: var(--success);  color: #fff; }
+    .step-num {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.25);
+      font-size: 11px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .card h2 { font-size: 17px; color: var(--ivy-blue); margin-bottom: 6px; }
+    .card p.sub { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead th {
+      background: var(--ivy-light);
+      color: var(--ivy-blue);
+      padding: 9px 12px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .4px;
+      border-bottom: 2px solid var(--border);
+    }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody td { padding: 9px 12px; vertical-align: middle; }
+    tbody tr:hover { background: #fafbfc; }
+
+    .grade-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .grade-A { background: #d1fae5; color: #065f46; }
+    .grade-B { background: #dbeafe; color: #1e40af; }
+    .grade-C { background: #fef3c7; color: #92400e; }
+    .grade-D { background: #fee2e2; color: #991b1b; }
+    .grade-F { background: #f3f4f6; color: #374151; }
+
+    .req-category { margin-bottom: 24px; }
+    .req-category h3 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .req-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      border: 1px solid transparent;
+    }
+    .req-item.satisfied    { background: #f0fdf4; border-color: #bbf7d0; }
+    .req-item.not-satisfied{ background: #fff8f0; border-color: #fed7aa; }
+    .req-item.grade-fail   { background: #fef2f2; border-color: #fecaca; }
+    .req-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .req-info { flex: 1; }
+    .req-info .req-title { font-weight: 600; font-size: 14px; }
+    .req-info .req-meta  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .req-credits { font-size: 13px; font-weight: 700; color: var(--muted); flex-shrink: 0; }
+
+    .progress-hero {
+      background: linear-gradient(135deg, var(--ivy-blue) 0%, #005aa7 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .progress-hero .big-num   { font-size: 52px; font-weight: 800; line-height: 1; }
+    .progress-hero .big-label { font-size: 13px; opacity: .8; margin-top: 4px; }
+    .progress-hero .divider   { width: 1px; background: rgba(255,255,255,.2); align-self: stretch; }
+    .progress-hero .stats     { display: flex; gap: 28px; flex-wrap: wrap; }
+    .progress-hero .stat .val { font-size: 28px; font-weight: 700; }
+    .progress-hero .stat .lbl { font-size: 12px; opacity: .75; }
+
+    .progress-bar-wrap { margin-bottom: 20px; }
+    .progress-bar-wrap label { font-size: 13px; font-weight: 600; color: var(--muted); display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .progress-bar-track { height: 14px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .progress-bar-fill  { height: 100%; border-radius: 99px; background: var(--ivy-gold); transition: width .6s ease; }
+
+    .alert { padding: 12px 16px; border-radius: 6px; font-size: 13px; margin-bottom: 14px; border-left: 4px solid; }
+    .alert-warn    { background: #fffbeb; border-color: var(--ivy-gold); color: #78350f; }
+    .alert-info    { background: var(--ivy-light); border-color: var(--accent); color: #1e3a5f; }
+    .alert-success { background: #f0fdf4; border-color: var(--success); color: #064e3b; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: opacity .15s, transform .1s;
+    }
+    .btn:hover  { opacity: .88; }
+    .btn:active { transform: scale(.97); }
+    .btn-primary   { background: var(--ivy-blue); color: #fff; }
+    .btn-secondary { background: var(--ivy-gold); color: var(--ivy-blue); }
+    .btn-outline   { background: transparent; color: var(--ivy-blue); border: 1px solid var(--ivy-blue); }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+
+    select {
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      background: var(--surface);
+      color: var(--text);
+      width: 100%;
+      max-width: 420px;
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--muted); }
+
+    .transcript-actions { display: flex; gap: 8px; margin-bottom: 14px; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; background: var(--ivy-light); color: var(--ivy-blue); }
+
+    .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; font-size: 12px; }
+    .legend-item { display: flex; align-items: center; gap: 5px; }
+    .legend-dot  { width: 12px; height: 12px; border-radius: 3px; }
+
+    /* ── Advisor Finding Cards ───────────────────────────────── */
+    .finding {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .finding-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .finding-header:hover { background: #fafbfc; }
+    .finding-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 800;
+      flex-shrink: 0;
+    }
+    .finding-title { font-weight: 700; font-size: 15px; flex: 1; }
+    .finding-toggle { font-size: 18px; color: var(--muted); transition: transform .2s; }
+    .finding.open .finding-toggle { transform: rotate(180deg); }
+    .finding-body { display: none; padding: 0 18px 18px; }
+    .finding.open .finding-body { display: block; }
+    .finding-row {
+      display: flex; gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .finding-row:last-child { border-bottom: none; }
+    .finding-row .fr-label { font-weight: 600; min-width: 110px; flex-shrink: 0; color: var(--muted); font-size: 12px; padding-top: 2px; }
+    .finding-row .fr-val   { flex: 1; }
+    .schedule-pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 2px 3px 2px 0;
+    }
+    .pill-online  { background: #dbeafe; color: #1e40af; }
+    .pill-evening { background: #ede9fe; color: #5b21b6; }
+    .pill-hybrid  { background: #fef3c7; color: #92400e; }
+    .pill-weekend { background: #d1fae5; color: #065f46; }
+    .cred-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .cred-earned  { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+    .cred-close   { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+    .hold-box {
+      background: #fff8f0;
+      border: 1px solid #fed7aa;
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .hold-box .hold-type { font-weight: 700; font-size: 14px; color: var(--danger); margin-bottom: 4px; }
+    .hold-box .hold-desc { font-size: 13px; color: var(--text); }
+
+    @media print {
+      header, .steps, .btn-row, .transcript-actions { display: none !important; }
+      .view { display: block !important; }
+      body  { background: #fff; }
+    }
+    @media (max-width: 600px) {
+      .progress-hero { flex-direction: column; gap: 16px; }
+      .progress-hero .divider { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-brand">
+    <div class="logo-mark">IVY</div>
+    <div>
+      <h1>Come Back &amp; Finish</h1>
+      <p>Ivy Tech Community College · Credit Audit Dashboard</p>
+    </div>
+  </div>
+  <span class="header-badge">A-IVY · 2030</span>
+</header>
+
+<div class="wrapper">
+
+  <div class="steps">
+    <button class="step-btn active" onclick="goTo(0)" id="tab0"><span class="step-num">1</span> My Transcript</button>
+    <button class="step-btn"        onclick="goTo(1)" id="tab1"><span class="step-num">2</span> Choose Program</button>
+    <button class="step-btn"        onclick="goTo(2)" id="tab2"><span class="step-num">3</span> My Roadmap</button>
+  </div>
+
+  <!-- VIEW 0 — TRANSCRIPT -->
+  <div class="view active" id="view0">
+    <div class="card" style="border-left:4px solid var(--ivy-gold);margin-bottom:16px;padding:20px 24px;">
+      <div style="display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:220px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:4px;">Your Story</div>
+          <div style="font-size:17px;font-weight:700;color:var(--ivy-blue);">Jordan Rivera</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:2px;">Warehouse Supervisor · Indianapolis · Single Parent</div>
+          <div style="font-size:13px;color:var(--muted);">Stopped out 2016 · 58 credits earned</div>
+        </div>
+        <div style="background:var(--ivy-light);border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ivy-blue);max-width:420px;font-style:italic;border-left:3px solid var(--ivy-gold);">
+          "Tell me what I already have and show me what's left. Don't make me start over."
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Your Past Credits</h2>
+      <p class="sub">These are Jordan's credits from 2013–2016. Toggle courses on/off to explore scenarios. The audit on the next screen will tell you exactly what still counts today.</p>
+
+      <div class="alert alert-info">
+        <strong>Sample Data Only</strong> — This prototype uses fictional student "Jordan Rivera" (sample ID: SAMPLE-002). No real student information is used or stored.
+      </div>
+
+      <div class="transcript-actions">
+        <button class="btn btn-outline" style="font-size:12px;padding:6px 12px;" onclick="toggleAll(true)">✓ Select All</button>
+        <button class="btn btn-outline" style="font-size:12px;padding:6px 12px;" onclick="toggleAll(false)">✗ Deselect All</button>
+        <span class="tag" id="selected-count">14 courses selected</span>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Course</th>
+            <th>Title</th>
+            <th>Cr.</th>
+            <th>Grade</th>
+            <th>Year</th>
+          </tr>
+        </thead>
+        <tbody id="transcript-tbody"></tbody>
+      </table>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="goTo(1)">Next: Choose a Program →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 1 — PROGRAM SELECTION -->
+  <div class="view" id="view1">
+    <div class="card">
+      <h2>Choose Your Target Program</h2>
+      <p class="sub">Jordan needs a credential for a promotion. Select the program below — the audit will show exactly which of Jordan's 58 credits still count toward it today.</p>
+
+      <div class="form-group">
+        <label for="program-select">Program (2024–2025 Catalog)</label>
+        <select id="program-select" onchange="onProgramChange()">
+          <option value="BUSA-AAS-2024">Business Administration AAS</option>
+          <option value="MGMT-CERT-2024">Business Management Certificate</option>
+          <option value="ACCT-AAS-2024">Accounting AAS</option>
+        </select>
+      </div>
+
+      <div id="program-info-box" class="alert alert-info" style="margin-top:0;"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-outline" onclick="goTo(0)">← Back</button>
+        <button class="btn btn-primary" onclick="runAnalysis()">Analyze My Credits →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 2 — ROADMAP RESULTS -->
+  <div class="view" id="view2">
+    <div id="results-hero"></div>
+    <div id="results-progress"></div>
+    <div id="results-alerts"></div>
+
+    <!-- THREE AUDIT SECTIONS -->
+    <div id="section-apply"></div>
+    <div id="section-expired"></div>
+    <div id="section-needed"></div>
+
+    <div class="card" style="border-left:4px solid var(--ivy-gold);">
+      <h2>📅 Suggested Next Steps</h2>
+      <p class="sub">Based on Jordan's remaining requirements, here's a clear path to the credential.</p>
+      <div id="next-steps"></div>
+    </div>
+
+    <!-- ADVISOR FINDINGS -->
+    <div style="margin-top:8px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:12px;padding-left:2px;">Advisor Findings</div>
+      <div id="finding-1"></div>
+      <div id="finding-2"></div>
+      <div id="finding-3"></div>
+    </div>
+
+    <div class="btn-row" style="margin-bottom:32px;">
+      <button class="btn btn-outline"   onclick="goTo(1)">← Change Program</button>
+      <button class="btn btn-secondary" onclick="window.print()">🖨 Print My Roadmap</button>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<script>
+// ── SAMPLE DATA — Jordan Rivera (fictional, SAMPLE-002) ──────────
+// 58 credits earned 2013–2016 before stopping out
+const TRANSCRIPT = [
+  // General Education
+  { course_id:"ENGL-111", title:"English Composition",            credits:3, grade:"B", year:2013 },
+  { course_id:"ENGL-112", title:"English Composition II",         credits:3, grade:"C", year:2013 },
+  { course_id:"COMM-101", title:"Fundamentals of Public Speaking",credits:3, grade:"A", year:2013 },
+  { course_id:"PSYC-101", title:"Introduction to Psychology",     credits:3, grade:"B", year:2013 },
+  { course_id:"BUSN-150", title:"Career Development",             credits:1, grade:"S", year:2013 },
+  { course_id:"MATH-123", title:"Quantitative Reasoning",         credits:3, grade:"C", year:2014 },
+  { course_id:"MATH-211", title:"Statistics",                     credits:3, grade:"D", year:2014 },
+  // Business Core
+  { course_id:"BUSN-101", title:"Introduction to Business",       credits:3, grade:"A", year:2014 },
+  { course_id:"BUSN-115", title:"Business Ethics",                credits:3, grade:"B", year:2014 },
+  { course_id:"ACCT-101", title:"Accounting Principles I",        credits:3, grade:"B", year:2014 },
+  { course_id:"ACCT-102", title:"Accounting Principles II",       credits:3, grade:"C", year:2015 },
+  { course_id:"MGMT-101", title:"Principles of Management",       credits:3, grade:"A", year:2015 },
+  { course_id:"MKTG-101", title:"Principles of Marketing",        credits:3, grade:"B", year:2015 },
+  { course_id:"BUSN-220", title:"Business Law I",                 credits:3, grade:"B", year:2015 },
+  { course_id:"CIS-101",  title:"Introduction to Computers",      credits:3, grade:"A", year:2015 },
+  { course_id:"ECON-201", title:"Principles of Microeconomics",   credits:3, grade:"C", year:2015 },
+  { course_id:"ECON-202", title:"Principles of Macroeconomics",   credits:3, grade:"C", year:2016 },
+  // Elective / Extra
+  { course_id:"HLTH-101", title:"Personal Health & Wellness",     credits:3, grade:"A", year:2016 },
+  { course_id:"SOCI-111", title:"Introduction to Sociology",      credits:3, grade:"B", year:2016 },
+  { course_id:"MGMT-130", title:"Supervisory Management",         credits:3, grade:"A", year:2016 },
+];
+// Total: 58 credits (19 × 3 + 1)
+
+const PROGRAMS = {
+  "BUSA-AAS-2024": {
+    title:"Business Administration AAS", total_credits:60, catalog:"2024-2025",
+    description:"Prepares students for careers in business & management. 60 total credit hours required.",
+    categories:[
+      { name:"General Education Core", courses:[
+        { course_id:"ENGL-111", title:"English Composition",            credits:3, min_grade:"D" },
+        { course_id:"COMM-101", title:"Fundamentals of Public Speaking",credits:3, min_grade:"D" },
+        { course_id:"MATH-123", title:"Quantitative Reasoning",         credits:3, min_grade:"D" },
+        { course_id:"PSYC-101", title:"Introduction to Psychology",     credits:3, min_grade:"D" },
+      ]},
+      { name:"Business Core", courses:[
+        { course_id:"BUSN-101", title:"Introduction to Business",    credits:3, min_grade:"D" },
+        { course_id:"ACCT-101", title:"Accounting Principles I",     credits:3, min_grade:"D" },
+        { course_id:"ACCT-102", title:"Accounting Principles II",    credits:3, min_grade:"D" },
+        { course_id:"MGMT-101", title:"Principles of Management",    credits:3, min_grade:"D" },
+        { course_id:"MKTG-101", title:"Principles of Marketing",     credits:3, min_grade:"D" },
+        { course_id:"BUSN-220", title:"Business Law I",              credits:3, min_grade:"D" },
+        { course_id:"CIS-101",  title:"Introduction to Computers",   credits:3, min_grade:"D" },
+        { course_id:"ECON-201", title:"Principles of Microeconomics",credits:3, min_grade:"D" },
+      ]},
+      { name:"Economics & Quantitative", courses:[
+        { course_id:"ECON-202", title:"Principles of Macroeconomics",credits:3, min_grade:"D" },
+        { course_id:"MATH-211", title:"Statistics",                  credits:3, min_grade:"C", note:"Min. grade C required" },
+      ]},
+      { name:"Management Concentration", courses:[
+        { course_id:"MGMT-201", title:"Human Resource Management", credits:3, min_grade:"D" },
+        { course_id:"MGMT-215", title:"Organizational Behavior",   credits:3, min_grade:"D" },
+        { course_id:"BUSN-280", title:"Business Communications",   credits:3, min_grade:"D" },
+      ]},
+      { name:"Capstone & Electives", courses:[
+        { course_id:"BUSN-299",    title:"Business Capstone",                      credits:3, min_grade:"D" },
+        { course_id:"BUSN-ELEC-1", title:"Business Elective (any BUSN/MGMT 200+)", credits:3, min_grade:"D", is_elective:true },
+        { course_id:"BUSN-ELEC-2", title:"Business Elective (any BUSN/MGMT 200+)", credits:3, min_grade:"D", is_elective:true },
+      ]},
+    ]
+  },
+
+  "MGMT-CERT-2024": {
+    title:"Business Management Certificate", total_credits:18, catalog:"2024-2025",
+    description:"Short-term certificate focused on core management skills. 18 total credit hours.",
+    categories:[
+      { name:"Required Courses", courses:[
+        { course_id:"BUSN-101", title:"Introduction to Business",  credits:3, min_grade:"D" },
+        { course_id:"MGMT-101", title:"Principles of Management",  credits:3, min_grade:"D" },
+        { course_id:"MGMT-201", title:"Human Resource Management", credits:3, min_grade:"D" },
+        { course_id:"MGMT-215", title:"Organizational Behavior",   credits:3, min_grade:"D" },
+        { course_id:"BUSN-280", title:"Business Communications",   credits:3, min_grade:"D" },
+        { course_id:"MKTG-101", title:"Principles of Marketing",   credits:3, min_grade:"D" },
+      ]},
+    ]
+  },
+
+  "ACCT-AAS-2024": {
+    title:"Accounting AAS", total_credits:61, catalog:"2024-2025",
+    description:"Prepares students for accounting careers and CPA exam eligibility. 61 total credit hours.",
+    categories:[
+      { name:"General Education", courses:[
+        { course_id:"ENGL-111", title:"English Composition",            credits:3, min_grade:"D" },
+        { course_id:"COMM-101", title:"Fundamentals of Public Speaking",credits:3, min_grade:"D" },
+        { course_id:"MATH-123", title:"Quantitative Reasoning",         credits:3, min_grade:"D" },
+      ]},
+      { name:"Accounting Core", courses:[
+        { course_id:"ACCT-101", title:"Accounting Principles I",   credits:3, min_grade:"D" },
+        { course_id:"ACCT-102", title:"Accounting Principles II",  credits:3, min_grade:"D" },
+        { course_id:"ACCT-201", title:"Intermediate Accounting I", credits:3, min_grade:"D" },
+        { course_id:"ACCT-202", title:"Intermediate Accounting II",credits:3, min_grade:"D" },
+        { course_id:"ACCT-210", title:"Cost Accounting",           credits:3, min_grade:"D" },
+        { course_id:"ACCT-220", title:"Tax Accounting",            credits:3, min_grade:"D" },
+      ]},
+      { name:"Business Support", courses:[
+        { course_id:"BUSN-101", title:"Introduction to Business", credits:3, min_grade:"D" },
+        { course_id:"BUSN-220", title:"Business Law I",           credits:3, min_grade:"D" },
+        { course_id:"CIS-101",  title:"Introduction to Computers",credits:3, min_grade:"D" },
+        { course_id:"MATH-211", title:"Statistics",               credits:3, min_grade:"C", note:"Min. grade C required" },
+      ]},
+      { name:"Capstone", courses:[
+        { course_id:"ACCT-299",  title:"Accounting Capstone",        credits:3, min_grade:"D" },
+        { course_id:"ACCT-ELEC", title:"Accounting Elective (200+)", credits:4, min_grade:"D", is_elective:true },
+      ]},
+    ]
+  },
+};
+
+// ── GRADE HELPERS ────────────────────────────────────────────────
+function gradePoints(g) {
+  return {"A":4,"A-":3.7,"B+":3.3,"B":3,"B-":2.7,"C+":2.3,"C":2,"C-":1.7,"D+":1.3,"D":1,"D-":0.7,"F":0,"W":0,"I":0}[g] ?? 0;
+}
+function gradeOk(earned, minGrade) {
+  if (!earned || earned==="W" || earned==="I") return false;
+  return gradePoints(earned) >= gradePoints(minGrade);
+}
+function gradeClass(g) {
+  if (g==="A") return "grade-A";
+  if (g==="B") return "grade-B";
+  if (g==="C") return "grade-C";
+  if (g==="D") return "grade-D";
+  return "grade-F";
+}
+
+// ── STATE ────────────────────────────────────────────────────────
+let selectedCourses = new Set(TRANSCRIPT.map(c => c.course_id));
+
+// ── NAVIGATION ───────────────────────────────────────────────────
+function goTo(n) {
+  document.querySelectorAll(".view").forEach((v,i) => v.classList.toggle("active", i===n));
+  document.querySelectorAll(".step-btn").forEach((b,i) => {
+    b.classList.remove("active","done");
+    if (i < n)  b.classList.add("done");
+    if (i===n)  b.classList.add("active");
+  });
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+// ── TRANSCRIPT VIEW ──────────────────────────────────────────────
+function renderTranscript() {
+  document.getElementById("transcript-tbody").innerHTML = TRANSCRIPT.map(c => `
+    <tr>
+      <td style="width:36px;text-align:center;">
+        <input type="checkbox" ${selectedCourses.has(c.course_id)?"checked":""}
+          onchange="toggleCourse('${c.course_id}',this.checked)"
+          style="width:16px;height:16px;cursor:pointer;accent-color:var(--ivy-blue);" />
+      </td>
+      <td style="font-weight:600;white-space:nowrap;">${c.course_id}</td>
+      <td>${c.title}</td>
+      <td style="text-align:center;">${c.credits}</td>
+      <td><span class="grade-badge ${gradeClass(c.grade)}">${c.grade}</span></td>
+      <td style="color:var(--muted);">${c.year}</td>
+    </tr>`).join("");
+  updateSelectedCount();
+}
+
+function toggleCourse(id, checked) {
+  checked ? selectedCourses.add(id) : selectedCourses.delete(id);
+  updateSelectedCount();
+}
+function toggleAll(state) {
+  TRANSCRIPT.forEach(c => state ? selectedCourses.add(c.course_id) : selectedCourses.delete(c.course_id));
+  renderTranscript();
+}
+function updateSelectedCount() {
+  const total = [...selectedCourses].reduce((s,id) => {
+    const c = TRANSCRIPT.find(x => x.course_id===id);
+    return s + (c ? c.credits : 0);
+  }, 0);
+  document.getElementById("selected-count").textContent = `${selectedCourses.size} courses · ${total} credits selected`;
+}
+
+// ── PROGRAM INFO ─────────────────────────────────────────────────
+function onProgramChange() {
+  const prog = PROGRAMS[document.getElementById("program-select").value];
+  if (prog) document.getElementById("program-info-box").innerHTML =
+    `<strong>${prog.title}</strong> — ${prog.description}<br>
+     <span style="color:var(--muted);font-size:12px;">Catalog: ${prog.catalog}</span>`;
+}
+
+// ── ANALYSIS ENGINE ──────────────────────────────────────────────
+function runAnalysis() {
+  const prog = PROGRAMS[document.getElementById("program-select").value];
+  const myMap = {};
+  TRANSCRIPT.forEach(c => { if (selectedCourses.has(c.course_id)) myMap[c.course_id] = c; });
+
+  // Classify every program requirement into one of three buckets
+  let applyItems   = [];   // ✅ Credits That Apply
+  let expiredItems = [];   // ⚠️ No Longer Count (grade too low)
+  let neededItems  = [];   // 📋 Still Needed
+  let satisfiedCredits = 0;
+
+  prog.categories.forEach(cat => {
+    cat.courses.forEach(req => {
+      if (req.is_elective) {
+        neededItems.push({ ...req, category: cat.name, reason: `Choose any ${req.course_id.startsWith("ACCT")?"ACCT":"BUSN or MGMT"} 200+ level course` });
+        return;
+      }
+      const taken = myMap[req.course_id];
+      if (taken) {
+        if (gradeOk(taken.grade, req.min_grade)) {
+          satisfiedCredits += req.credits;
+          applyItems.push({ ...req, category: cat.name, earnedGrade: taken.grade, earnedYear: taken.year });
+        } else {
+          expiredItems.push({ ...req, category: cat.name, earnedGrade: taken.grade, earnedYear: taken.year });
+        }
+      } else {
+        neededItems.push({ ...req, category: cat.name });
+      }
+    });
+  });
+
+  // Also find transcript courses that don't match any program requirement
+  const allReqIds = new Set(prog.categories.flatMap(c => c.courses.map(r => r.course_id)));
+  const extraCourses = TRANSCRIPT.filter(c =>
+    selectedCourses.has(c.course_id) && !allReqIds.has(c.course_id)
+  );
+
+  const retakeCredits = expiredItems.reduce((s,r) => s+r.credits, 0);
+  const stillNeeded   = neededItems.reduce((s,r) => s+r.credits, 0) + retakeCredits;
+  const pct           = Math.round((satisfiedCredits / prog.total_credits) * 100);
+  const semLeft       = Math.ceil(stillNeeded / 15);
+
+  // ── HERO ─────────────────────────────────────────────────────────
+  document.getElementById("results-hero").innerHTML = `
+    <div class="progress-hero">
+      <div>
+        <div class="big-num">${satisfiedCredits}</div>
+        <div class="big-label">credits apply toward<br><strong>${prog.title}</strong></div>
+      </div>
+      <div class="divider"></div>
+      <div class="stats">
+        <div class="stat"><div class="val">${stillNeeded}</div><div class="lbl">credits remaining</div></div>
+        <div class="stat"><div class="val">${pct}%</div><div class="lbl">complete</div></div>
+        <div class="stat"><div class="val">~${semLeft}</div><div class="lbl">semester${semLeft!==1?"s":""} to finish</div></div>
+      </div>
+    </div>`;
+
+  // ── PROGRESS BAR ─────────────────────────────────────────────────
+  document.getElementById("results-progress").innerHTML = `
+    <div class="progress-bar-wrap">
+      <label>
+        <span>Progress toward ${prog.title}</span>
+        <span>${satisfiedCredits} of ${prog.total_credits} required credits complete</span>
+      </label>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" style="width:${pct}%;"></div>
+      </div>
+    </div>`;
+
+  // ── TOP ALERTS ────────────────────────────────────────────────────
+  let alertsHtml = "";
+  if (pct >= 60) alertsHtml += `<div class="alert alert-success"><strong>You're closer than you think.</strong> ${satisfiedCredits} of your past credits still count today — you're ${pct}% of the way there.</div>`;
+  alertsHtml += `<div class="alert alert-info"><strong>Planning tool only.</strong> Final credit evaluation is performed by an Ivy Tech academic advisor. <a href="#" style="color:var(--accent);">Schedule an advising appointment →</a></div>`;
+  document.getElementById("results-alerts").innerHTML = alertsHtml;
+
+  // ── SECTION 1: CREDITS THAT APPLY ────────────────────────────────
+  const applyRows = applyItems.map(r => `
+    <div class="req-item satisfied">
+      <span class="req-icon">✓</span>
+      <div class="req-info">
+        <div class="req-title">${r.course_id} · ${r.title}</div>
+        <div class="req-meta"><span style="color:var(--muted);">${r.category}</span> · Completed ${r.earnedYear} · Grade: <strong>${r.earnedGrade}</strong></div>
+      </div>
+      <div class="req-credits">${r.credits} cr.</div>
+    </div>`).join("");
+
+  document.getElementById("section-apply").innerHTML = `
+    <div class="card" style="border-left:4px solid var(--success);">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;">
+        <h2 style="color:var(--success);">✅ Credits That Apply</h2>
+        <span style="font-size:13px;font-weight:700;color:var(--success);">${applyItems.length} courses · ${satisfiedCredits} credits</span>
+      </div>
+      <p class="sub">These past credits count toward the ${prog.title} today. No action needed.</p>
+      ${applyRows || '<p style="color:var(--muted);font-size:13px;">None of your selected courses match this program\'s requirements.</p>'}
+    </div>`;
+
+  // ── SECTION 2: NO LONGER COUNT ────────────────────────────────────
+  const noLongerRows = expiredItems.map(r => `
+    <div class="req-item grade-fail">
+      <span class="req-icon">⚠</span>
+      <div class="req-info">
+        <div class="req-title">${r.course_id} · ${r.title}</div>
+        <div class="req-meta"><span style="color:var(--muted);">${r.category}</span> · Grade earned: <strong>${r.earnedGrade}</strong> · Minimum required: <strong>${r.min_grade}</strong>${r.note?" · <em>"+r.note+"</em>":""} — retake needed</div>
+      </div>
+      <div class="req-credits">${r.credits} cr.</div>
+    </div>`).join("");
+
+  const extraRows = extraCourses.map(c => `
+    <div class="req-item" style="background:#f8f9fa;border-color:var(--border);">
+      <span class="req-icon" style="color:var(--muted);">—</span>
+      <div class="req-info">
+        <div class="req-title" style="color:var(--muted);">${c.course_id} · ${c.title}</div>
+        <div class="req-meta">Taken ${c.year} · Grade ${c.grade} · Not required for this program — may count as free elective credit</div>
+      </div>
+      <div class="req-credits" style="color:var(--muted);">${c.credits} cr.</div>
+    </div>`).join("");
+
+  document.getElementById("section-expired").innerHTML = `
+    <div class="card" style="border-left:4px solid var(--danger);">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;">
+        <h2 style="color:var(--danger);">⚠️ No Longer Count</h2>
+        <span style="font-size:13px;font-weight:700;color:var(--danger);">${expiredItems.length + extraCourses.length} courses flagged</span>
+      </div>
+      <p class="sub">These courses were taken but either don't meet the grade requirement for this program, or aren't part of this program's requirements.</p>
+      ${noLongerRows || ""}
+      ${extraRows || ""}
+      ${(!noLongerRows && !extraRows) ? '<p style="color:var(--success);font-size:13px;">None — all your courses either apply or are still needed.</p>' : ""}
+    </div>`;
+
+  // ── SECTION 3: STILL NEEDED ───────────────────────────────────────
+  const neededRows = neededItems.map(r => `
+    <div class="req-item not-satisfied">
+      <span class="req-icon">○</span>
+      <div class="req-info">
+        <div class="req-title">${r.is_elective ? r.title : r.course_id+" · "+r.title}</div>
+        <div class="req-meta"><span style="color:var(--muted);">${r.category}</span>${r.reason?" · "+r.reason:r.note?" · <em>"+r.note+"</em>":""}</div>
+      </div>
+      <div class="req-credits">${r.credits} cr.</div>
+    </div>`).join("");
+
+  // Also list grade-fail courses as needing retake
+  const retakeRows = expiredItems.map(r => `
+    <div class="req-item grade-fail">
+      <span class="req-icon">↺</span>
+      <div class="req-info">
+        <div class="req-title">Retake: ${r.course_id} · ${r.title}</div>
+        <div class="req-meta">Earned ${r.earnedGrade} · Need ${r.min_grade} or better${r.note?" · <em>"+r.note+"</em>":""}</div>
+      </div>
+      <div class="req-credits">${r.credits} cr.</div>
+    </div>`).join("");
+
+  document.getElementById("section-needed").innerHTML = `
+    <div class="card" style="border-left:4px solid var(--warning);">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;">
+        <h2 style="color:var(--warning);">📋 Still Needed</h2>
+        <span style="font-size:13px;font-weight:700;color:var(--warning);">${neededItems.length + expiredItems.length} courses · ${stillNeeded} credits</span>
+      </div>
+      <p class="sub">These are the only courses standing between Jordan and the ${prog.title}.</p>
+      ${retakeRows}
+      ${neededRows || '<p style="color:var(--success);font-size:13px;">All program requirements are satisfied!</p>'}
+    </div>`;
+
+  // ── NEXT STEPS ────────────────────────────────────────────────────
+  const steps = [];
+  expiredItems.forEach(w => steps.push(`<li><strong>Retake ${w.course_id}</strong> — need grade ${w.min_grade} or better (earned ${w.earnedGrade})</li>`));
+  neededItems.slice(0,4).forEach(r => steps.push(`<li>Complete <strong>${r.is_elective ? r.title : r.course_id+" "+r.title}</strong></li>`));
+  if (neededItems.length > 4) steps.push(`<li>…and ${neededItems.length-4} more course${neededItems.length-4!==1?"s":""}</li>`);
+  steps.push(`<li><a href="#" style="color:var(--accent);">Meet with an Ivy Tech academic advisor</a> to confirm credit acceptance and build your official plan</li>`);
+  steps.push(`<li>Apply for re-enrollment at <a href="https://www.ivytech.edu" style="color:var(--accent);">ivytech.edu</a></li>`);
+  document.getElementById("next-steps").innerHTML = `<ol style="padding-left:20px;line-height:2;">${steps.join("")}</ol>`;
+
+  // ── FINDING 1: SCHEDULE FLEXIBILITY ──────────────────────────────
+  document.getElementById("finding-1").innerHTML = `
+    <div class="finding open" id="f1">
+      <div class="finding-header" onclick="toggleFinding('f1')">
+        <div class="finding-num" style="background:#ede9fe;color:#5b21b6;">1</div>
+        <div class="finding-title">🕐 Schedule Options That Fit Around Your Job</div>
+        <span class="finding-toggle">▾</span>
+      </div>
+      <div class="finding-body">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">
+          The plan assumes full-time, daytime attendance — but Jordan works. Here are the formats Ivy Tech offers for every remaining required course:
+        </p>
+        <div class="finding-row">
+          <div class="fr-label">Available formats</div>
+          <div class="fr-val">
+            <span class="schedule-pill pill-online">100% Online</span>
+            <span class="schedule-pill pill-evening">Evening (after 5pm)</span>
+            <span class="schedule-pill pill-hybrid">Hybrid (online + 1 day/wk)</span>
+            <span class="schedule-pill pill-weekend">Weekend sections</span>
+          </div>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Part-time path</div>
+          <div class="fr-val">Taking <strong>2 courses per semester</strong> (6 credits), Jordan could finish in <strong>${Math.ceil(stillNeeded / 6)} semesters</strong> (~${Math.ceil(stillNeeded / 6 / 2)} years) while working full-time.</div>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Full-time path</div>
+          <div class="fr-val">Taking <strong>5 courses per semester</strong> (15 credits), finish in <strong>~${semLeft} semester${semLeft!==1?"s":""}</strong>.</div>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Recommended</div>
+          <div class="fr-val">Start with <strong>2 online courses</strong> next term to re-establish enrollment. All of Jordan's remaining required courses have online or evening sections.</div>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Ask your advisor</div>
+          <div class="fr-val"><a href="#" style="color:var(--accent);">Search the schedule builder for evening/online sections →</a></div>
+        </div>
+      </div>
+    </div>`;
+
+  // ── FINDING 2: SHORTEST PATH + STACKABLE CREDENTIALS ─────────────
+  // Check if Jordan already qualifies for the Mgmt Certificate (needs BUSN-101, MGMT-101, MKTG-101, MGMT-201, MGMT-215, BUSN-280)
+  const mgmtCertReqs  = ["BUSN-101","MGMT-101","MKTG-101"];
+  const certSatisfied = mgmtCertReqs.filter(id => {
+    const t = myMap[id];
+    return t && gradeOk(t.grade, "D");
+  });
+  const certMissing   = ["MGMT-201","MGMT-215","BUSN-280"]; // never in Jordan's transcript
+  const certCreditsLeft = certMissing.length * 3;
+
+  document.getElementById("finding-2").innerHTML = `
+    <div class="finding" id="f2">
+      <div class="finding-header" onclick="toggleFinding('f2')">
+        <div class="finding-num" style="background:#d1fae5;color:#065f46;">2</div>
+        <div class="finding-title">🏁 Shortest Path to a Credential</div>
+        <span class="finding-toggle">▾</span>
+      </div>
+      <div class="finding-body">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">
+          Jordan doesn't have to wait until the full AAS to earn a credential. Here's what's already within reach:
+        </p>
+
+        <div class="cred-badge cred-close" style="display:flex;">
+          <span>📜</span>
+          <span>Business Management Certificate (18 cr.) — only <strong>${certCreditsLeft} credits away</strong></span>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Already have</div>
+          <div class="fr-val">${certSatisfied.map(id => `<strong>${id}</strong>`).join(", ")} — ${certSatisfied.length * 3} of 18 credits satisfied</div>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Still need</div>
+          <div class="fr-val">${certMissing.map(id => `<strong>${id}</strong>`).join(", ")} (${certCreditsLeft} credits)</div>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Why it matters</div>
+          <div class="fr-val">The Certificate stacks directly into the AAS — every credit counts toward both. Jordan could earn a credential in <strong>~1 semester</strong>, then continue toward the full degree.</div>
+        </div>
+
+        <div class="cred-badge cred-earned" style="display:flex;margin-top:14px;">
+          <span>✓</span>
+          <span>${prog.title} — ${satisfiedCredits} of ${prog.total_credits} credits complete (${pct}%)</span>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Fastest finish</div>
+          <div class="fr-val">Complete the Management Certificate first (${certCreditsLeft} cr.), then finish the remaining ${stillNeeded - certCreditsLeft > 0 ? stillNeeded - certCreditsLeft : 0} credits for the full AAS. Total path: <strong>${stillNeeded} credits</strong>.</div>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Ask your advisor</div>
+          <div class="fr-val"><a href="#" style="color:var(--accent);">Confirm stackable certificate eligibility →</a></div>
+        </div>
+      </div>
+    </div>`;
+
+  // ── FINDING 3: ACCOUNT HOLD ───────────────────────────────────────
+  document.getElementById("finding-3").innerHTML = `
+    <div class="finding" id="f3">
+      <div class="finding-header" onclick="toggleFinding('f3')">
+        <div class="finding-num" style="background:#fee2e2;color:#991b1b;">3</div>
+        <div class="finding-title">🔒 You Have an Old Hold on Your Account</div>
+        <span class="finding-toggle">▾</span>
+      </div>
+      <div class="finding-body">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">
+          A hold from 2016 is still active. This does <strong>not</strong> erase your credits — but it will block registration until it's cleared. Here's what it likely means and what to do.
+        </p>
+
+        <div class="hold-box">
+          <div class="hold-type">Most common hold type for stopped-out students: Financial Hold</div>
+          <div class="hold-desc">An unpaid balance from a prior term — often as small as a library fee, parking fine, or a small remaining balance after financial aid. It does not affect your transcript or credit history.</div>
+        </div>
+
+        <div class="finding-row">
+          <div class="fr-label">What it blocks</div>
+          <div class="fr-val">Registration for new classes and release of official transcripts. It does <strong>not</strong> delete your credits.</div>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Who can help</div>
+          <div class="fr-val">
+            <strong>Student Accounts / Bursar's Office</strong> — to identify and pay any balance<br>
+            <strong>Financial Aid Office</strong> — if the hold is related to aid overpayment or Satisfactory Academic Progress (SAP)<br>
+            <strong>Registrar's Office</strong> — if it's an administrative or records hold
+          </div>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">What to do next</div>
+          <div class="fr-val">
+            <ol style="padding-left:16px;line-height:1.9;">
+              <li>Log in to <a href="https://my.ivytech.edu" style="color:var(--accent);">my.ivytech.edu</a> and go to <strong>Student Records → Holds</strong> to see the exact hold type and amount</li>
+              <li>Call or visit the <strong>Bursar's Office</strong> at your nearest campus to ask about a payment plan — many holds under $500 can be resolved same-day</li>
+              <li>Ask about the <strong>Fresh Start</strong> or <strong>Reconnect</strong> programs — Ivy Tech sometimes waives older balances for returning adults</li>
+              <li>Once cleared, your account unlocks immediately and you can register</li>
+            </ol>
+          </div>
+        </div>
+        <div class="finding-row">
+          <div class="fr-label">Important</div>
+          <div class="fr-val">Don't let the hold stop you from starting the conversation. Advisors can begin your credit audit and build your plan <em>before</em> the hold is cleared.</div>
+        </div>
+      </div>
+    </div>`;
+
+  goTo(2);
+}
+
+function toggleFinding(id) {
+  document.getElementById(id).classList.toggle("open");
+}
+
+// ── INIT ─────────────────────────────────────────────────────────
+renderTranscript();
+onProgramChange();
+</script>
+</body>
+</html>
