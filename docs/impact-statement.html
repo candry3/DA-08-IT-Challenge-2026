@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Impact Statement — Come Back &amp; Finish · Ivy Tech</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ivy-blue:  #003865;
+    --ivy-gold:  #F2A900;
+    --ivy-light: #E8F0F8;
+    --accent:    #0057A8;
+    --success:   #1A7F4B;
+    --muted:     #57606a;
+    --border:    #d1d9e0;
+    --bg:        #f4f6f9;
+    --text:      #1f2328;
+  }
+
+  @page {
+    size: Letter portrait;
+    margin: 0;
+  }
+
+  html, body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Page shell ── */
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 52px 44px;
+  }
+
+  /* ── Header band ── */
+  .page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid var(--ivy-blue);
+    margin-bottom: 28px;
+  }
+  .header-left {}
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ivy-gold);
+    color: var(--ivy-blue);
+    font-weight: 800;
+    font-size: 13px;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+  .doc-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ivy-blue);
+    line-height: 1.15;
+    margin-bottom: 3px;
+  }
+  .doc-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .header-badge {
+    background: var(--ivy-blue);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+
+  /* ── Section headings ── */
+  h2 {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .7px;
+    color: var(--ivy-blue);
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section {
+    margin-bottom: 24px;
+  }
+
+  p {
+    margin-bottom: 8px;
+  }
+  p:last-child { margin-bottom: 0; }
+
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  /* ── Three-question table ── */
+  .q-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin: 10px 0 10px;
+  }
+  .q-table th {
+    background: var(--ivy-light);
+    color: var(--ivy-blue);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+  }
+  .q-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .q-table tr:last-child td { border-bottom: none; }
+  .q-table td:last-child { font-weight: 700; color: var(--ivy-blue); white-space: nowrap; }
+
+  /* ── Metric table ── */
+  .metric-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin: 10px 0 10px;
+  }
+  .metric-table th {
+    background: var(--ivy-light);
+    color: var(--ivy-blue);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+  }
+  .metric-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .metric-table tr:last-child td { border-bottom: none; }
+  .metric-table .hl td {
+    background: #f0fdf4;
+    font-weight: 700;
+    color: var(--success);
+  }
+
+  /* ── Pillar chips ── */
+  .pillar-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+  }
+  .pillar-list li {
+    padding: 5px 0 5px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12.5px;
+    position: relative;
+  }
+  .pillar-list li:last-child { border-bottom: none; }
+  .pillar-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--ivy-gold);
+    font-weight: 700;
+  }
+
+  /* ── Why-it-matters grid ── */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .impact-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 11px 13px;
+  }
+  .impact-card .ic-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--ivy-blue);
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    margin-bottom: 4px;
+  }
+  .impact-card p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ── Design-principle callout ── */
+  .principle-box {
+    background: var(--ivy-light);
+    border-left: 4px solid var(--ivy-gold);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 10px 0 0;
+  }
+  .principle-box blockquote {
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--ivy-blue);
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+  .principle-box p {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ── Footer ── */
+  .page-footer {
+    margin-top: 28px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+  }
+  .footer-note {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .footer-brand {
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  @media print {
+    .page { padding: 36px 44px 36px; }
+    body  { background: #fff; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-left">
+      <div class="logo-mark">IVY</div>
+      <div class="doc-title">Impact Statement</div>
+      <div class="doc-subtitle">Come Back &amp; Finish — A Credit Audit Dashboard for Returning Adult Learners<br>Ivy Tech Community College · Strategic Plan 2030</div>
+    </div>
+    <span class="header-badge">A-IVY · 2030</span>
+  </div>
+
+  <!-- The Problem -->
+  <section>
+    <h2>The Problem We're Solving</h2>
+    <p>Indiana has tens of thousands of Hoosiers who started college, earned real credits, and stopped out before finishing — not because they failed, but because life intervened. For these students, the path back has been defined by <strong>uncertainty and friction</strong>: unclear credit status, mandatory advisor appointments, and a process designed for first-time enrollees — not working adults, single parents, or people whose employers are now requiring a credential.</p>
+    <p><strong>The uncertainty is the wall.</strong> Most stop-out students never make it past it.</p>
+  </section>
+
+  <!-- What This Tool Does -->
+  <section>
+    <h2>What This Tool Does</h2>
+    <p><strong>Come Back and Finish</strong> is a self-service Credit Audit Dashboard that answers the three questions every returning student asks — in a single session, without an appointment:</p>
+    <table class="q-table">
+      <thead>
+        <tr><th>The Question</th><th>The Answer</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><em>"What credits do I already have that count toward my degree today?"</em></td><td>✅ Credits That Apply</td></tr>
+        <tr><td><em>"What credits I took no longer fit the program?"</em></td><td>⚠️ Credits That No Longer Count</td></tr>
+        <tr><td><em>"How close am I to finishing?"</em></td><td>📋 Remaining Requirements + Progress Bar</td></tr>
+      </tbody>
+    </table>
+    <p>A student like <strong>Renee (S5001)</strong> — stopped out Spring 2019, working full-time, needing a credential for a promotion already earned — can visit this tool and know, before they close the tab, that they are closer to the finish line than they thought.</p>
+  </section>
+
+  <!-- Measurable Impact -->
+  <section>
+    <h2>The Measurable Impact</h2>
+    <table class="metric-table">
+      <thead>
+        <tr><th>Stage</th><th>Metric</th><th>Target</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Prototype</td><td>Demo viewers who ask a re-enrollment follow-up question</td><td>&gt; 60%</td></tr>
+        <tr><td>Pilot — Year 1</td><td>Stop-out students who begin an application after using the tool</td><td>25% conversion</td></tr>
+        <tr class="hl"><td><strong>2030 Goal</strong></td><td><strong>Stop-out students who complete a credential after returning</strong></td><td><strong>1,000 / year</strong></td></tr>
+      </tbody>
+    </table>
+    <p>Every credential earned by a returning student who came back because they finally understood their progress is a counted outcome under <strong>Ivy Tech's 2030 completion goals</strong>.</p>
+  </section>
+
+  <!-- Strategic Alignment -->
+  <section>
+    <h2>Strategic Alignment</h2>
+    <p>This project directly operationalizes <strong>Pillar 3: Student-Centered Journey</strong> from Ivy Tech's Strategic Plan 2030, which commits to:</p>
+    <ul class="pillar-list">
+      <li>Streamlining enrollment and advising processes</li>
+      <li>Establishing transparent success roadmaps</li>
+      <li>Building student momentum</li>
+      <li>Delivering seamless, unified experiences at every stage of the student lifecycle</li>
+    </ul>
+    <p style="margin-top:10px;">The tool also advances <strong>Pillar 2: Career &amp; Transfer Pathways</strong> by connecting credential completion directly to workforce outcomes — an employer-required promotion the student has already earned but cannot receive without the degree.</p>
+  </section>
+
+  <!-- Why It Matters -->
+  <section>
+    <h2>Why It Matters Beyond One Student</h2>
+    <div class="impact-grid">
+      <div class="impact-card">
+        <div class="ic-label">Scale</div>
+        <p>Ivy Tech serves over 160,000 students annually. Stop-out adults represent the single largest untapped pipeline for credential completion.</p>
+      </div>
+      <div class="impact-card">
+        <div class="ic-label">Equity</div>
+        <p>Working adults, parents, and low-income learners are least able to navigate a slow, appointment-dependent process. This tool removes that inequity by design.</p>
+      </div>
+      <div class="impact-card">
+        <div class="ic-label">Efficiency</div>
+        <p>Every stop-out student who self-answers "Am I close enough to come back?" is an advisor appointment saved — freeing advisors for students with more complex needs.</p>
+      </div>
+      <div class="impact-card">
+        <div class="ic-label">Economic Impact</div>
+        <p>Each credential completion has downstream workforce and wage effects for the student, their family, and Indiana's talent pipeline.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Design Principle -->
+  <section>
+    <h2>The Design Principle</h2>
+    <div class="principle-box">
+      <blockquote>"Tell me what I already have and show me what's left. Don't make me start over."</blockquote>
+      <p>This tool was designed from that single sentence. The student's time, trust, and existing work are respected from the first screen to the last. That is the impact.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="page-footer">
+    <div class="footer-note">
+      Come Back &amp; Finish · Ivy Tech Community College · Strategic Plan 2030, Student-Centered Journey.<br>
+      Prototype built using mock data. No real student records were used.
+    </div>
+    <div class="footer-brand">Made with IBM Bob</div>
+  </div>
+
+</div>
+</body>
+</html>
