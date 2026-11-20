@@ -1,0 +1,537 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Come Back &amp; Finish — Presentation</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ivy-blue:#003865;
+  --ivy-gold:#F2A900;
+  --ivy-light:#E8F0F8;
+  --accent:#0057A8;
+  --success:#1A7F4B;
+  --warning:#B45309;
+  --danger:#C0392B;
+  --muted:#57606a;
+  --border:#d1d9e0;
+  --bg:#f4f6f9;
+  --surface:#fff;
+  --text:#1f2328;
+}
+html,body{height:100%;font-family:-apple-system,"Segoe UI",system-ui,sans-serif;background:#1a1a2e;color:var(--text)}
+.deck{width:100%;max-width:900px;margin:0 auto;padding:16px 16px 32px}
+.slide{
+  background:var(--surface);
+  border-radius:12px;
+  padding:40px 48px;
+  margin-bottom:32px;
+  min-height:420px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  position:relative;
+  box-shadow:0 4px 24px rgba(0,0,0,.35);
+  page-break-inside:avoid;
+}
+.slide-num{
+  position:absolute;
+  top:16px;right:20px;
+  font-size:12px;font-weight:700;
+  color:var(--muted);letter-spacing:.5px;
+}
+.slide-label{
+  font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;
+  color:var(--muted);margin-bottom:10px;
+}
+
+/* ── Slide 1: Title ── */
+.s1{background:linear-gradient(135deg,var(--ivy-blue) 0%,#005aa7 100%);color:#fff;}
+.s1 .slide-num{color:rgba(255,255,255,.5)}
+.s1 .kicker{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;opacity:.7;margin-bottom:16px}
+.s1 h1{font-size:40px;font-weight:800;line-height:1.1;margin-bottom:12px}
+.s1 .sub{font-size:16px;opacity:.8;margin-bottom:28px}
+.s1 .chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:30px;padding:7px 16px;font-size:13px;font-weight:600;margin:4px}
+.s1 .chips{display:flex;flex-wrap:wrap;gap:4px}
+.logo-mark{background:var(--ivy-gold);color:var(--ivy-blue);font-weight:800;font-size:18px;width:44px;height:44px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;margin-right:10px;vertical-align:middle;letter-spacing:-1px}
+
+/* ── Section header slides ── */
+.s-section{background:var(--ivy-blue);color:#fff;}
+.s-section .slide-num{color:rgba(255,255,255,.5)}
+.s-section .sec-num{font-size:64px;font-weight:800;line-height:1;opacity:.15;position:absolute;right:40px;top:28px}
+.s-section h2{font-size:34px;font-weight:800;margin-bottom:10px}
+.s-section p{font-size:16px;opacity:.8;max-width:560px}
+
+/* ── Content slides ── */
+.s-content h2{font-size:24px;font-weight:800;color:var(--ivy-blue);margin-bottom:18px}
+
+/* Grid helpers */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+
+/* Cards within slides */
+.card-sm{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:16px 18px}
+.card-sm h3{font-size:14px;font-weight:700;color:var(--ivy-blue);margin-bottom:6px}
+.card-sm p{font-size:13px;color:var(--muted);line-height:1.5}
+
+.persona-box{background:var(--ivy-light);border-left:4px solid var(--ivy-gold);border-radius:0 8px 8px 0;padding:18px 20px;margin-bottom:14px}
+.persona-box .name{font-size:20px;font-weight:800;color:var(--ivy-blue)}
+.persona-box .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.persona-box .quote{font-size:13px;color:var(--ivy-blue);font-style:italic;margin-top:10px;border-top:1px solid rgba(0,86,168,.15);padding-top:10px}
+
+.stat-row{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px}
+.stat-box{flex:1;min-width:120px;background:var(--bg);border-radius:8px;padding:14px 16px;text-align:center;border:1px solid var(--border)}
+.stat-box .val{font-size:32px;font-weight:800;color:var(--ivy-blue);line-height:1}
+.stat-box .lbl{font-size:12px;color:var(--muted);margin-top:3px}
+
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.badge-success{background:#d1fae5;color:#065f46}
+.badge-warn   {background:#fef3c7;color:#92400e}
+.badge-danger {background:#fee2e2;color:#991b1b}
+.badge-blue   {background:var(--ivy-light);color:var(--ivy-blue)}
+.badge-purple {background:#ede9fe;color:#5b21b6}
+
+.timeline{display:flex;flex-direction:column;gap:12px}
+.tl-item{display:flex;gap:14px;align-items:flex-start}
+.tl-num{width:28px;height:28px;border-radius:50%;background:var(--ivy-blue);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.tl-body .tl-title{font-weight:700;font-size:14px;color:var(--ivy-blue)}
+.tl-body .tl-desc{font-size:13px;color:var(--muted);margin-top:2px}
+
+.metric-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px}
+.metric-table th{background:var(--ivy-light);color:var(--ivy-blue);padding:8px 12px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.4px;border-bottom:2px solid var(--border)}
+.metric-table td{padding:9px 12px;border-bottom:1px solid var(--border)}
+.metric-table tr:last-child td{border-bottom:none}
+.metric-table .highlight td{background:#f0fdf4;font-weight:700;color:var(--success)}
+
+.pill{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;margin:2px 3px 2px 0}
+.pill-green {background:#d1fae5;color:#065f46}
+.pill-orange{background:#fef3c7;color:#92400e}
+.pill-red   {background:#fee2e2;color:#991b1b}
+.pill-purple{background:#ede9fe;color:#5b21b6}
+.pill-blue  {background:#dbeafe;color:#1e40af}
+
+.nav-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(26,26,46,.96);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px;
+  font-size:12px;color:rgba(255,255,255,.5);
+  z-index:999;
+}
+.nav-bar a{color:rgba(255,255,255,.75);text-decoration:none;padding:4px 10px;border-radius:4px;background:rgba(255,255,255,.1)}
+.nav-bar a:hover{background:rgba(255,255,255,.2);color:#fff}
+
+.footnote{font-size:11px;color:var(--muted);margin-top:16px;padding-top:12px;border-top:1px solid var(--border)}
+
+.talk-track{
+  background:#fffbeb;
+  border:1px solid #fcd34d;
+  border-radius:6px;
+  padding:12px 16px;
+  margin-top:16px;
+  font-size:12px;
+  color:#78350f;
+  line-height:1.6;
+}
+.talk-track strong{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;color:#92400e}
+
+@media print{
+  body{background:#fff}
+  .nav-bar{display:none}
+  .slide{box-shadow:none;margin-bottom:0;border:1px solid var(--border);page-break-after:always}
+}
+</style>
+</head>
+<body>
+<div class="deck">
+
+
+<div class="slide s1" id="s1">
+  <span class="slide-num">1 / 8</span>
+  <div class="kicker"><span class="logo-mark">IVY</span> Ivy Tech Community College · Strategic Plan 2030</div>
+  <h1>Come Back &amp; Finish</h1>
+  <p class="sub">A Credit Audit Dashboard for Returning Adult Learners</p>
+  <div class="chips">
+    <span class="chip">🧑‍💼 Persona: Renee (S5001)</span>
+    <span class="chip">🏛️ Pillar 3: Student-Centered Journey</span>
+    <span class="chip">💡 Plain HTML · No Login · 30-Second Answer</span>
+    <span class="chip">📊 2030 Goal: 1,000 completions / year</span>
+  </div>
+  <div class="talk-track">
+    <strong>🎙 Talk Track (~30 sec)</strong>
+    Every year, thousands of Hoosiers with real college credits never finish — not because they failed, but because they couldn't get a straight answer about where they stand. This is Ivy Tech's Credit Audit Dashboard. One session. No appointment. Three plain-language answers. We built it around one real student's data, and we'll walk you through exactly how it works.
+  </div>
+</div>
+
+
+<div class="slide" id="s2">
+  <span class="slide-num">2 / 8</span>
+  <div class="slide-label">The Problem</div>
+  <h2 style="color:var(--ivy-blue);font-size:26px;font-weight:800;margin-bottom:18px">The uncertainty is the wall.</h2>
+  <div class="grid-2">
+    <div>
+      <div class="persona-box">
+        <div class="name">Renee · Student S5001</div>
+        <div class="meta">Last enrolled: Spring 2019 · Works Mon–Fri 8:00–16:30 (full-time)</div>
+        <div class="meta" style="margin-top:4px">Goal: finish a credential for a promotion at work</div>
+        <div class="quote">"Tell me what I already have and show me what's left. Don't make me start over."</div>
+      </div>
+      <div class="card-sm" style="border-left:3px solid var(--danger)">
+        <h3>What's standing in her way</h3>
+        <p>• 2 active account holds blocking registration<br />
+           • 1 Withdrawal (BUSN 140) she may not realize needs a retake<br />
+           • 2 retired courses she doesn't know count under new names<br />
+           • No way to know she's already <strong>65–100% done</strong> without an advisor</p>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card-sm">
+        <h3>The scale of the problem</h3>
+        <p><strong>36 million Americans</strong> have some college and no degree. At Ivy Tech alone, stopped-out students are the single largest untapped population for credential completion.</p>
+      </div>
+      <div class="card-sm" style="border-left:3px solid var(--warning)">
+        <h3>The old path back</h3>
+        <p>Book an advisor → wait weeks → navigate a system designed for 18-year-olds → most stop-out students never get past this friction.</p>
+      </div>
+      <div class="card-sm" style="border-left:3px solid var(--success)">
+        <h3>The new path</h3>
+        <p><strong>30 seconds. No appointment.</strong> A self-service dashboard that answers the three questions every returning student actually has — before they close the tab.</p>
+      </div>
+    </div>
+  </div>
+  <div class="talk-track">
+    <strong>🎙 Talk Track (~40 sec)</strong>
+    Meet Renee. Student S5001. Last enrolled Spring 2019. She works full-time, Monday through Friday. Her goal is a credential for a promotion she's essentially already earned. She has a Withdrawal on her record and two retired courses she doesn't know have been remapped. She also has two holds that will block registration — but no one has told her. Without a tool like this, she doesn't know she may already be more than halfway done.
+  </div>
+</div>
+
+
+<div class="slide" id="s3">
+  <span class="slide-num">3 / 8</span>
+  <div class="slide-label">Strategic Anchor</div>
+  <h2 style="color:var(--ivy-blue);font-size:26px;font-weight:800;margin-bottom:18px">Pillar 3: Student-Centered Journey</h2>
+  <div class="grid-2">
+    <div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:16px;line-height:1.6">Ivy Tech's Strategic Plan 2030 Pillar 3 commits to delivering a seamless, unified experience so every learner can access clear roadmaps, efficient systems, and timely support at every stage — including returning after a stop-out.</p>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-num">1</div>
+          <div class="tl-body">
+            <div class="tl-title">Streamline enrollment &amp; advising</div>
+            <div class="tl-desc">Remove the gatekeeping step — this tool gives Renee her audit in 30 seconds, not 3 weeks</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-num">2</div>
+          <div class="tl-body">
+            <div class="tl-title">Establish transparent success roadmaps</div>
+            <div class="tl-desc">Three sections + a visual progress bar = Renee's exact roadmap, generated from actual transcript data</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-num">3</div>
+          <div class="tl-body">
+            <div class="tl-title">Build student momentum</div>
+            <div class="tl-desc">Seeing "you're 65% done" and "9 credits from a certificate" turns uncertainty into motivation</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-num">4</div>
+          <div class="tl-body">
+            <div class="tl-title">Operationalize holistic student supports</div>
+            <div class="tl-desc">Hold identification, schedule-fit analysis, and stackable credential pathways — all in one screen</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="background:var(--ivy-blue);color:#fff;border-radius:10px;padding:20px 22px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;opacity:.7;margin-bottom:10px">This prototype directly operationalizes all 4 strategies</div>
+        <div style="font-size:28px;font-weight:800;line-height:1.2">Renee's story is not an edge case.<br />She <em>is</em> this pillar.</div>
+      </div>
+      <div class="card-sm" style="border-left:3px solid var(--ivy-gold)">
+        <h3>Pillar 4 connection: Innovation &amp; Future Readiness</h3>
+        <p>Built as a plain-HTML proof of concept today. The same engine scales to AI-assisted advising (A-IVY), SIS integration, and proactive outreach — "You're closer than you think. See your credits →"</p>
+      </div>
+    </div>
+  </div>
+  <div class="talk-track">
+    <strong>🎙 Talk Track (~30 sec)</strong>
+    This isn't just a nice-to-have tool. Every one of Pillar 3's four statewide strategies maps directly to something this dashboard does. And it connects to Pillar 4 too — the same matching engine that runs in a browser today is the foundation for A-IVY advising at scale tomorrow.
+  </div>
+</div>
+
+
+<div class="slide" id="s4">
+  <span class="slide-num">4 / 8</span>
+  <div class="slide-label">Technical Approach</div>
+  <h2 style="color:var(--ivy-blue);font-size:24px;font-weight:800;margin-bottom:16px">What the Prototype Actually Does</h2>
+  <div class="grid-2">
+    <div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Six source data files from the case → one single-file HTML prototype. No backend. No login. Opens in any browser.</p>
+      <div class="card-sm" style="margin-bottom:12px">
+        <h3>Data sources used</h3>
+        <p style="line-height:2">
+          <span class="badge badge-blue">student.csv</span> <span class="badge badge-blue">older_transcript.csv</span><br />
+          <span class="badge badge-blue">program_requirements.csv</span> <span class="badge badge-blue">course_mapping.csv</span><br />
+          <span class="badge badge-blue">holds.csv</span> <span class="badge badge-blue">spring_2027_schedule.csv</span>
+        </p>
+      </div>
+      <div class="card-sm">
+        <h3>The matching engine</h3>
+        <p>
+          1. Apply <strong>course equivalency rules</strong> (IVYT 101 → IVYT 111; BUSN 210 → BUSN 211)<br />
+          2. Match transcript courses to program requirements by exact course ID<br />
+          3. Flag <strong>Withdrawals (W)</strong> as not satisfying requirements → retake required<br />
+          4. Identify elective slots and fill with unused passing credits<br />
+          5. Flag courses not in selected program as extra (useful for other credentials)
+        </p>
+      </div>
+    </div>
+    <div>
+      <div class="card-sm" style="margin-bottom:12px;border-left:3px solid var(--ivy-gold)">
+        <h3>Three programs from source data</h3>
+        <p style="line-height:2">
+          <span class="badge badge-success">Business Administration (AAS) · 60 cr.</span><br />
+          <span class="badge badge-blue">Business Operations (Certificate) · 18 cr.</span><br />
+          <span class="badge badge-purple">Human Resources (Tech. Cert.) · 15 cr.</span>
+        </p>
+      </div>
+      <div class="card-sm" style="border-left:3px solid var(--success)">
+        <h3>Schedule-fit analysis (new)</h3>
+        <p>Renee works Mon–Fri 8:00–16:30. For every course she still needs, the Spring 2027 schedule is cross-referenced and each section is flagged:<br />
+        <span class="pill pill-green">✓ Works for Renee</span>
+        <span class="pill pill-red">✗ Daytime conflict</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="talk-track">
+    <strong>🎙 Talk Track (~30 sec)</strong>
+    Every piece of data in this prototype came directly from the six source files in the case. The engine applies real course equivalency rules, flags the Withdrawal on BUSN 140, cross-references Spring 2027 sections against Renee's work hours, and surfaces both account holds with specific resolution steps. This isn't mock data — it's Renee's actual situation.
+  </div>
+</div>
+
+
+<div class="slide" id="s5">
+  <span class="slide-num">5 / 8</span>
+  <div class="slide-label">Prototype Walkthrough</div>
+  <h2 style="color:var(--ivy-blue);font-size:24px;font-weight:800;margin-bottom:18px">Three Sections · Three Questions Answered</h2>
+  <div class="grid-3">
+    <div class="card-sm" style="border-left:4px solid var(--success)">
+      <h3 style="color:var(--success)">✅ Credits That Apply</h3>
+      <p style="margin-bottom:10px">What courses from Renee's transcript satisfy a current program requirement?</p>
+      <p><strong>Business Admin AAS example:</strong><br />
+         ENGL 111 (A) ✓<br />
+         MATH 123 (C) ✓<br />
+         BUSN 101 (B) ✓<br />
+         BUSN 105 (B) ✓<br />
+         ACCT 101 (B) ✓<br />
+         ACCT 102 (C) ✓<br />
+         CINS 101 (A) ✓<br />
+         COMM 101 (B) ✓<br />
+         ECON 202 (B) ✓<br />
+         BUSN 202 (B) ✓<br />
+         BUSN 211 ✓ <span class="badge badge-purple">mapped</span><br />
+         IVYT 111 ✓ <span class="badge badge-purple">mapped</span>
+      </p>
+    </div>
+    <div class="card-sm" style="border-left:4px solid var(--danger)">
+      <h3 style="color:var(--danger)">⚠️ Don't Count Here</h3>
+      <p style="margin-bottom:10px">Courses that can't satisfy a requirement for the selected program — either W grade or not in this program.</p>
+      <p><strong>BUSN 140 · Business Law</strong><br />
+         Grade earned: <strong>W</strong><br />
+         Withdrawal — course must be retaken<br /><br />
+         Courses not in this program flag as extra (but may count toward another credential or elective)</p>
+    </div>
+    <div class="card-sm" style="border-left:4px solid var(--warning)">
+      <h3 style="color:var(--warning)">📋 Still Needed</h3>
+      <p style="margin-bottom:10px">What Renee actually has left to complete.</p>
+      <p><strong>Retake:</strong> BUSN 140 (Business Law) — W grade<br /><br />
+         <strong>New courses needed:</strong><br />
+         PSYC 101 · BUSN 230 · BUSN 250 · BUSN 280 · Electives<br /><br />
+         Exact count and credits shown dynamically for each program selected.</p>
+    </div>
+  </div>
+  <div style="margin-top:16px;background:var(--ivy-light);border-radius:8px;padding:14px 18px;display:flex;gap:24px;flex-wrap:wrap;align-items:center">
+    <div style="text-align:center">
+      <div style="font-size:36px;font-weight:800;color:var(--ivy-blue)">39</div>
+      <div style="font-size:12px;color:var(--muted)">credits apply (AAS)</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-size:36px;font-weight:800;color:var(--success)">65%</div>
+      <div style="font-size:12px;color:var(--muted)">complete (AAS)</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-size:36px;font-weight:800;color:var(--warning)">21</div>
+      <div style="font-size:12px;color:var(--muted)">credits remaining</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-size:36px;font-weight:800;color:var(--accent)">100%</div>
+      <div style="font-size:12px;color:var(--muted)">complete (Certificate)</div>
+    </div>
+  </div>
+  <div class="talk-track">
+    <strong>🎙 Talk Track (~40 sec)</strong>
+    When Renee selects the Business Administration AAS, 39 of her credits apply immediately — she's 65% done. BUSN 140 is flagged because she withdrew — she'll need to retake it. Two of her courses were remapped automatically: IVYT 101 becomes IVYT 111, BUSN 210 becomes BUSN 211 — she doesn't lose a single credit. If she selects the Business Operations Certificate instead — she's 100% done. Already finished. That's the moment this tool is designed to create.
+  </div>
+</div>
+
+
+<div class="slide" id="s6">
+  <span class="slide-num">6 / 8</span>
+  <div class="slide-label">Advisor Findings — What No One Has Told Renee Yet</div>
+  <h2 style="color:var(--ivy-blue);font-size:24px;font-weight:800;margin-bottom:18px">Three things an advisor would say in the first 5 minutes</h2>
+  <div class="grid-3">
+    <div class="card-sm" style="border-left:4px solid #5b21b6">
+      <h3 style="color:#5b21b6">🕐 Finding 1<br />Schedule Fit</h3>
+      <p style="margin-bottom:8px">Renee works daytime. Every required course she still needs has an online or evening option in Spring 2027.</p>
+      <p>
+        <span class="pill pill-blue">BUSN 140 — Online (8 wk)</span><br />
+        <span class="pill pill-blue">BUSN 230 — Online or Tue eve</span><br />
+        <span class="pill pill-blue">BUSN 250 — Online (8 wk)</span><br />
+        <span class="pill pill-blue">PSYC 101 — Online or Thu eve</span><br />
+        <span class="pill pill-blue">BUSN 280 — Online</span>
+      </p>
+      <p style="margin-top:8px;font-size:12px;color:var(--muted)">2 courses/semester = done in ~4 semesters (~2 years) while working full-time</p>
+    </div>
+    <div class="card-sm" style="border-left:4px solid var(--success)">
+      <h3 style="color:var(--success)">🏁 Finding 2<br />Stackable Credentials</h3>
+      <p style="margin-bottom:8px">Renee is already <strong>100% done</strong> for the Business Operations Certificate. She could earn a credential this semester.</p>
+      <p style="font-size:12px;color:var(--muted)">Every credit for the Certificate counts toward the AAS — zero duplication. She could get promoted now, then continue at her own pace to the full degree.</p>
+      <p style="margin-top:8px">
+        <span class="pill pill-green">Certificate: 100% done</span><br />
+        <span class="pill pill-orange">AAS: 65% done</span>
+      </p>
+    </div>
+    <div class="card-sm" style="border-left:4px solid var(--danger)">
+      <h3 style="color:var(--danger)">🔒 Finding 3<br />Account Holds</h3>
+      <p style="margin-bottom:8px">Two holds will block Spring 2027 registration if not cleared. <strong>Neither erases credits.</strong></p>
+      <p style="font-size:12px;line-height:1.7">
+        <strong>BUR-PAST</strong> — $214.00 owed (Bursar) → Ask about Returning Student Balance Forgiveness Program<br />
+        <strong>ADM-RE</strong> — Readmission Required → Submit short online form
+      </p>
+      <p style="margin-top:8px;font-size:12px;color:var(--muted)">Advisors can begin credit audit <em>before</em> holds are cleared — don't wait.</p>
+    </div>
+  </div>
+  <div class="talk-track">
+    <strong>🎙 Talk Track (~30 sec)</strong>
+    Beyond the three sections, the dashboard surfaces three advisor findings — the things an advisor would say in the first 5 minutes. Finding 1: every class she still needs fits around her work schedule online or evenings. Finding 2: she can earn a credential this semester — she's 100% complete for the Business Operations Certificate. Finding 3: she has two holds — and we tell her exactly how to clear each one before she even picks up the phone.
+  </div>
+</div>
+
+
+<div class="slide" id="s7">
+  <span class="slide-num">7 / 8</span>
+  <div class="slide-label">How IBM Bob Was Used</div>
+  <h2 style="color:var(--ivy-blue);font-size:24px;font-weight:800;margin-bottom:18px">Bob as a Planning &amp; Engineering Partner</h2>
+  <div class="grid-2">
+    <div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-num">1</div>
+          <div class="tl-body">
+            <div class="tl-title">Strategic framing (Plan mode)</div>
+            <div class="tl-desc">Bob anchored the solution to Pillar 3, built the persona, and established the 2030 metric before writing a line of plan — discipline between strategy and implementation</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-num">2</div>
+          <div class="tl-body">
+            <div class="tl-title">Implementation plan</div>
+            <div class="tl-desc">Five sub-tasks, ordered by dependency, each with intent, expected outcomes, and an ordered todo list — ready to hand to Agent mode one task at a time</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-num">3</div>
+          <div class="tl-body">
+            <div class="tl-title">Gap analysis (Agent mode)</div>
+            <div class="tl-desc">Bob read all six source data files and identified that the original prototype used fictional "Jordan Rivera" data instead of real Renee/S5001 case data — then rebuilt the entire prototype with actual data</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-num">4</div>
+          <div class="tl-body">
+            <div class="tl-title">Documentation &amp; presentation</div>
+            <div class="tl-desc">README, collaboration log, and this presentation — all authored by Bob from the strategic foundation it helped build</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="background:var(--ivy-blue);color:#fff;border-radius:10px;padding:20px 22px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;opacity:.7;margin-bottom:10px">Bob's core discipline</div>
+        <div style="font-size:14px;line-height:1.7;opacity:.9">
+          ✓ Asked clarifying questions before building<br />
+          ✓ Anchored every claim to the case data<br />
+          ✓ Did not speculate about what it had not read<br />
+          ✓ Separated strategy from implementation<br />
+          ✓ Found and fixed real gaps, not hypothetical ones
+        </div>
+      </div>
+      <div class="card-sm" style="border-left:3px solid var(--ivy-gold)">
+        <h3>What this demonstrates</h3>
+        <p>IBM Bob is not just a code generator. It is a planning partner that asks the right questions, maintains discipline between strategy and implementation, grounds every claim in evidence, and produces artifacts that are ready to use — not prompts that require extensive cleanup.</p>
+      </div>
+    </div>
+  </div>
+  <div class="talk-track">
+    <strong>🎙 Talk Track (~25 sec)</strong>
+    Bob played two roles here. First, as a planning partner — building the strategic foundation, the persona, the pillar tie, and the prototype plan before writing a single line of code. Second, as an engineer — reading all six source files, identifying that the original prototype used the wrong student data, and rebuilding it with Renee's actual transcript, holds, course mappings, and schedule.
+  </div>
+</div>
+
+
+<div class="slide" id="s8">
+  <span class="slide-num">8 / 8</span>
+  <div class="slide-label">Measurable 2030 Outcome</div>
+  <h2 style="color:var(--ivy-blue);font-size:24px;font-weight:800;margin-bottom:18px">From One Student to 1,000 / Year</h2>
+  <div class="grid-2">
+    <div>
+      <table class="metric-table">
+        <thead><tr><th>Stage</th><th>What We Measure</th><th>Target</th></tr></thead>
+        <tbody>
+          <tr><td>Prototype</td><td>Demo viewers who ask a re-enrollment follow-up</td><td>&gt; 60%</td></tr>
+          <tr><td>Pilot Year 1</td><td>Stop-out students who begin an application after using the tool</td><td>25% conversion</td></tr>
+          <tr class="highlight"><td><strong>2030</strong></td><td><strong>Stop-out students who complete a credential within 24 months of return</strong></td><td><strong>1,000 / year</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="card-sm" style="margin-top:14px">
+        <h3>Why this metric moves</h3>
+        <p>The tool removes the decision barrier — the moment where Renee thinks "I don't even know where to start" and closes the tab. When the first screen says "you're 65% done and already finished for a Certificate," that moment disappears.</p>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card-sm" style="border-left:3px solid var(--ivy-gold)">
+        <h3>Where this goes by 2030</h3>
+        <p style="line-height:2">
+          <span class="pill pill-blue">Every Ivy Tech program across 19 campuses</span><br />
+          <span class="pill pill-blue">Real transcript data from SIS</span><br />
+          <span class="pill pill-blue">A-IVY: AI-assisted advising at scale</span><br />
+          <span class="pill pill-blue">Proactive outreach via text to every stopped-out student</span>
+        </p>
+      </div>
+      <div style="background:linear-gradient(135deg,var(--ivy-blue) 0%,#005aa7 100%);color:#fff;border-radius:10px;padding:20px 22px;text-align:center">
+        <div style="font-size:48px;font-weight:800;line-height:1">1,000</div>
+        <div style="font-size:14px;opacity:.8;margin-top:4px">stop-out students who complete a credential per year by December 2030</div>
+        <div style="font-size:12px;opacity:.6;margin-top:8px">Each one counted under Ivy Tech's 2030 completion goals</div>
+      </div>
+    </div>
+  </div>
+  <div class="talk-track">
+    <strong>🎙 Talk Track (~25 sec)</strong>
+    The goal is 1,000 stop-out students completing a credential per year by 2030. This prototype is the first step in that ladder. At scale, the same engine runs for every Ivy Tech program across all 19 campuses — and instead of Renee finding the tool, the system finds Renee first. That's the 2030 vision: a system that finds the student before the student has to find it. Thank you.
+  </div>
+</div>
+
+</div>
+
+<div class="footnote" style="color:rgba(255,255,255,.4);text-align:center;padding:16px;font-size:12px">
+  Come Back &amp; Finish · Ivy Tech Community College · Strategic Plan 2030, Pillar 3: Student-Centered Journey · DA-08-IT-Challenge-2026
+</div>
+
+<div style="text-align:center;padding:20px 0 80px;font-size:12px;color:rgba(255,255,255,.35);border-top:1px solid rgba(255,255,255,.1);max-width:900px;margin:0 auto">Made with IBM Bob</div>
+
+</body>
+</html>
